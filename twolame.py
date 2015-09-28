@@ -20,9 +20,12 @@
 #import std module(s)
 import os, sys, re
 import threading
+import logging
+import configparser
 
 #import custom module(s)
 import filesystem
+from spam import beshell
 
 #Replacement for string.format
 def insert_data(string, rep_dict):
@@ -38,7 +41,7 @@ class FS(threading.Thread):
         self.format_string = ''
 
         try:
-            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame'))
+            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_fs'))
         except:
             pass
 
@@ -58,13 +61,29 @@ class FS(threading.Thread):
         self.info = filesystem.info
         self.outstring = insert_data(self.format_string, self.info)
 
-        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame'), 'w') as f:
+        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_fs'), 'w') as f:
             f.write(self.outstring)
             f.write('\n')
 
+def get_rc(rc_file):
+    global FILESYSTEM
+    conf_parser = configparser.ConfigParser()
+    rc = conf_parser.read(rc_file)
+    FILESYSTEM = conf_parser.get('twolame', 'start_fs')
+
 def main():
-    fit1 = FS(1)
-    fit1.start()
+
+    logging.basicConfig(level=logging.DEBUG,
+                        format='%(asctime)s - %(levelname)s - %(message)s',
+                        datefmt="%H:%M:%S")
+
+    rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
+
+    get_rc(rc_file)
+
+    if FILESYSTEM == '1':
+        fit1 = FS(1)
+        fit1.start()
 
 if __name__ == '__main__':
     main()
