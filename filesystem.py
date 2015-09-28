@@ -21,6 +21,5 @@ import os
 from spam import fs
 
 mnt1 = os.path.expanduser('~')
-mnt2 = '/'
 
 info = { '{0}': fs.fs_info(mnt1)['mount'], '{1}': fs.fs_info(mnt1)['free'], '{2}': fs.fs_info(mnt1)['tot'], '{3}': fs.fs_info(mnt1)['used'], '{4}': fs.fs_info(mnt1)['pfree'], '{5}': fs.fs_info(mnt1)['pused']}
