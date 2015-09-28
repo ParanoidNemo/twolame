@@ -22,6 +22,7 @@ import os, sys, re
 import threading
 import logging
 import configparser
+import time
 
 #import custom module(s)
 import filesystem
@@ -56,6 +57,7 @@ class FS(threading.Thread):
     def run(self):
         while True:
             self.out()
+            time.sleep(int(FS_UPDATE_PERIOD))
 
     def out(self):
         self.info = filesystem.info
@@ -66,10 +68,11 @@ class FS(threading.Thread):
             f.write('\n')
 
 def get_rc(rc_file):
-    global FILESYSTEM
+    global FILESYSTEM, FS_UPDATE_PERIOD
     conf_parser = configparser.ConfigParser()
     rc = conf_parser.read(rc_file)
     FILESYSTEM = conf_parser.get('twolame', 'start_fs')
+    FS_UPDATE_PERIOD = conf_parser.get('fs', 'update_period')
 
 def main():
 
