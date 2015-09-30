@@ -25,7 +25,7 @@ import configparser
 import time
 
 #import custom module(s)
-import filesystem
+import filesystem, rc
 from spam import beshell
 
 #Replacement for string.format
@@ -57,7 +57,7 @@ class FS(threading.Thread):
     def run(self):
         while True:
             self.out()
-            time.sleep(int(FS_UPDATE_PERIOD))
+            time.sleep(int(rc.FS_UPDATE_PERIOD))
 
     def out(self):
         self.info = filesystem.info
@@ -67,13 +67,6 @@ class FS(threading.Thread):
             f.write(self.outstring)
             f.write('\n')
 
-def get_rc(rc_file):
-    global FILESYSTEM, FS_UPDATE_PERIOD
-    conf_parser = configparser.ConfigParser()
-    rc = conf_parser.read(rc_file)
-    FILESYSTEM = conf_parser.get('twolame', 'start_fs')
-    FS_UPDATE_PERIOD = conf_parser.get('fs', 'update_period')
-
 def main():
 
     logging.basicConfig(level=logging.DEBUG,
@@ -82,9 +75,9 @@ def main():
 
     rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
 
-    get_rc(rc_file)
+    rc.get_rc(rc_file)
 
-    if FILESYSTEM == '1':
+    if rc.FILESYSTEM == '1':
         fit1 = FS(1)
         fit1.start()
 

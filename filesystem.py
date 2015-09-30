@@ -19,7 +19,15 @@
 
 import os
 from spam import fs
+from spam import beshell
+import rc
 
-mnt1 = os.path.expanduser('~')
+rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
 
-info = { '{0}': fs.fs_info(mnt1)['mount'], '{1}': fs.fs_info(mnt1)['free'], '{2}': fs.fs_info(mnt1)['tot'], '{3}': fs.fs_info(mnt1)['used'], '{4}': fs.fs_info(mnt1)['pfree'], '{5}': fs.fs_info(mnt1)['pused']}
+rc.get_rc(rc_file)
+
+mnt1 = os.path.expanduser(rc.MNT1)
+mnt2 = os.path.expanduser(rc.MNT2)
+css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
+
+info = { '{0}': fs.fs_info(mnt1)['mount'], '{1}': fs.fs_info(mnt1)['free'], '{2}': fs.fs_info(mnt1)['tot'], '{3}': fs.fs_info(mnt1)['used'], '{4}': fs.fs_info(mnt1)['pfree'], '{5}': fs.fs_info(mnt1)['pused'], '{6}': fs.fs_info(mnt2)['mount'], '{7}': fs.fs_info(mnt2)['free'], '{8}': fs.fs_info(mnt2)['tot'], '{9}': fs.fs_info(mnt2)['used'], '{10}': fs.fs_info(mnt2)['pfree'], '{11}': fs.fs_info(mnt2)['pused'], '{x}': css }
