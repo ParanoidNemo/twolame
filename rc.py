@@ -7,7 +7,7 @@ def get_rc(rc_file):
 
     # define the global var
     global CSS
-    global FILESYSTEM, FS_UPDATE_PERIOD, MNT
+    global FILESYSTEM, FS_UPDATE_PERIOD, MNT, MNT_NUM
 
     # create the parser
     conf_parser = configparser.ConfigParser()
