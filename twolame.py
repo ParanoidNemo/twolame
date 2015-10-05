@@ -60,7 +60,7 @@ class FS(threading.Thread):
             time.sleep(int(rc.FS_UPDATE_PERIOD))
 
     def out(self):
-        self.info = filesystem.info
+        self.info = filesystem._info
         self.outstring = insert_data(self.format_string, self.info)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_fs'), 'w') as f:
