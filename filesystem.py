@@ -26,8 +26,37 @@ rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
 
 rc.get_rc(rc_file)
 
-mnt1 = os.path.expanduser(rc.MNT1)
-mnt2 = os.path.expanduser(rc.MNT2)
-css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
+dev = []
 
-info = { '{0}': fs.fs_info(mnt1)['mount'], '{1}': fs.fs_info(mnt1)['free'], '{2}': fs.fs_info(mnt1)['tot'], '{3}': fs.fs_info(mnt1)['used'], '{4}': fs.fs_info(mnt1)['pfree'], '{5}': fs.fs_info(mnt1)['pused'], '{6}': fs.fs_info(mnt2)['mount'], '{7}': fs.fs_info(mnt2)['free'], '{8}': fs.fs_info(mnt2)['tot'], '{9}': fs.fs_info(mnt2)['used'], '{10}': fs.fs_info(mnt2)['pfree'], '{11}': fs.fs_info(mnt2)['pused'], '{x}': css }
+try:
+    mnt0 = os.path.expanduser(rc.MNT[0])
+    dev.append(mnt0)
+    mnt1 = os.path.expanduser(rc.MNT[1])
+    dev.append(mnt1)
+    mnt2 = os.path.expanduser(rc.MNT[2])
+    dev.append(mnt2)
+    mnt3 = os.path.expanduser(rc.MNT[3])
+    dev.append(mnt3)
+    mnt4 = os.path.expanduser(rc.MNT[4])
+    dev.append(mnt4)
+except IndexError:
+    pass
+except Exception:
+    raise
+
+css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
+info = []
+_info = {}
+
+for item in dev:
+    info.append(fs.fs_info(item)['mount'])
+    info.append(fs.fs_info(item)['free'])
+    info.append(fs.fs_info(item)['tot'])
+    info.append(fs.fs_info(item)['used'])
+    info.append(fs.fs_info(item)['pfree'])
+    info.append(fs.fs_info(item)['pused'])
+
+for index, item in enumerate(info):
+    i = '{' + str(index) + '}'
+    _info[i] = item
+_info['{x}'] = css
