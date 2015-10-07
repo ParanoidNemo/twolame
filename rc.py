@@ -8,6 +8,7 @@ def get_rc(rc_file):
     # define the global var
     global CSS
     global FILESYSTEM, FS_UPDATE_PERIOD, MNT, MNT_NUM
+    global SECURITY, SERVER, USER
 
     # create the parser
     conf_parser = configparser.ConfigParser()
@@ -32,3 +33,8 @@ def get_rc(rc_file):
 
     except Exception as ex:
         print(ex)
+
+    # gather info for email module
+    SECURITY = conf_parser.get('mail', 'security')
+    SERVER = conf_parser.get('mail', 'server')
+    USER = conf_parser.get('mail', 'user')
