@@ -34,6 +34,11 @@ if rc.SECURITY == 'imap':
 
     m = imaplib.IMAP4_SSL(rc.SERVER)
 
+    if rc.PLAIN == 'True':
+        password = rc.PASS
+    else:
+        password = keyring.get_password()
+
     try:
         m.login(rc.USER, password)
     except imaplib.IMAP4.error:
