@@ -46,7 +46,7 @@ if rc.SECURITY == 'imap':
 
     rv, data = m.select("INBOX", readonly=True)
     if rv == 'OK':
-        webmail.process_mailbox(m)
+        m_info = webmail.process_mailbox(m)
         m.close()
     m.logout()
 
