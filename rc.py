@@ -8,7 +8,7 @@ def get_rc(rc_file):
     # define the global var
     global CSS
     global FILESYSTEM, FS_UPDATE_PERIOD, MNT, MNT_NUM
-    global SECURITY, SERVER, USER, PASS
+    global MAIL, MAIL_UPDATE_PERIOD, SECURITY, SERVER, USER, PASS, PLAIN
 
     # create the parser
     conf_parser = configparser.ConfigParser()
@@ -35,6 +35,8 @@ def get_rc(rc_file):
         print(ex)
 
     # gather info for email module
+    MAIL = conf_parser.get('twolame', 'start_mail')
+    MAIL_UPDATE_PERIOD = conf_parser.get('mail', 'update_period')
     SECURITY = conf_parser.get('mail', 'security')
     SERVER = conf_parser.get('mail', 'server')
     USER = conf_parser.get('mail', 'user')
