@@ -25,7 +25,7 @@ import configparser
 import time
 
 #import custom module(s)
-import filesystem, rc
+import filesystem, rc, mail
 from spam import beshell
 
 #Replacement for string.format
@@ -67,6 +67,40 @@ class FS(threading.Thread):
             f.write(self.outstring)
             f.write('\n')
 
+class MAIL(threading.Thread):
+
+    def __init__(self, threadID):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.outstring = ''
+        self.format_string = ''
+
+        try:
+            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_mail'))
+        except:
+            pass
+
+        with open(os.path.expanduser('~/.kde4/share/apps/be.shell/Themes/Hydrogen/twolame/mail.format')) as f:
+            for line in f:
+                if line.startswith('#'):
+                    continue
+                self.format_string += line
+
+        self.format_string = re.sub(r'>\s<', '><', self.format_string)
+
+    def run(self):
+        while True:
+            self.out()
+            time.sleep(int(rc.MAIL_UPDATE_PERIOD))
+
+    def out(self):
+        self.info = mail._info
+        self.outstring = insert_data(self.format_string, self.info)
+
+        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_mail'), 'w') as f:
+            f.write(self.outstring)
+            f.write('\n')
+
 def main():
 
     logging.basicConfig(level=logging.DEBUG,
@@ -80,6 +114,10 @@ def main():
     if rc.FILESYSTEM == '1':
         fit1 = FS(1)
         fit1.start()
+
+    if rc.MAIL == '1':
+        fit2 = MAIL(2)
+        fit2.start()
 
 if __name__ == '__main__':
     main()
