@@ -52,3 +52,13 @@ if rc.SECURITY == 'imap':
 
 else:
     pass
+
+css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
+new_mail = {}
+tot = len(m_info)
+
+for index, item in enumerate(m_info[-5:]):
+    i = '{' + str(index) + '}'
+    new_mail[i] = item
+new_mail['{x}'] = css
+new_mail['{tot}'] = str(tot)
