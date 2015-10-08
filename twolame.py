@@ -94,7 +94,7 @@ class MAIL(threading.Thread):
             time.sleep(int(rc.MAIL_UPDATE_PERIOD))
 
     def out(self):
-        self.info = mail._info
+        self.info = mail.new_mail
         self.outstring = insert_data(self.format_string, self.info)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_mail'), 'w') as f:
