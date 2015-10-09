@@ -69,3 +69,4 @@ for index, item in enumerate(m_info[-5:]):
     new_mail[i] = item
 new_mail['{x}'] = css
 new_mail['{tot}'] = str(tot)
+new_mail['{user}'] = rc.USER
