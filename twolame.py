@@ -23,6 +23,7 @@ import threading
 import logging
 import configparser
 import time
+import importlib
 
 #import custom module(s)
 import filesystem, rc, mail
@@ -56,6 +57,7 @@ class FS(threading.Thread):
 
     def run(self):
         while True:
+            importlib.reload(filesystem)
             self.out()
             time.sleep(int(rc.FS_UPDATE_PERIOD))
 
@@ -90,6 +92,7 @@ class MAIL(threading.Thread):
 
     def run(self):
         while True:
+            importlib.reload(mail)
             self.out()
             time.sleep(int(rc.MAIL_UPDATE_PERIOD))
 
