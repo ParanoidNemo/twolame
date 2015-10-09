@@ -26,7 +26,7 @@ import time
 import importlib
 
 #import custom module(s)
-import filesystem, rc, mail
+import filesystem, rc, mail, update
 from spam import beshell
 
 #Replacement for string.format
@@ -104,6 +104,41 @@ class MAIL(threading.Thread):
             f.write(self.outstring)
             f.write('\n')
 
+class UP(threading.Thread):
+
+    def __init__(self, threadID):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.outstring = ''
+        self.format_string = ''
+
+        try:
+            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_up'))
+        except:
+            pass
+
+        with open(os.path.expanduser('~/.kde4/share/apps/be.shell/Themes/Hydrogen/twolame/up.format')) as f:
+            for line in f:
+                if line.startswith('#'):
+                    continue
+                self.format_string += line
+
+        self.format_string = re.sub(r'>\s<', '><', self.format_string)
+
+    def run(self):
+        while True:
+            importlib.reload(update)
+            self.out()
+            time.sleep(int(rc.UP_UPDATE_PERIOD))
+
+    def out(self):
+        self.info = update._update
+        self.outstring = insert_data(self.format_string, self.info)
+
+        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_up'), 'w') as f:
+            f.write(self.outstring)
+            f.write('\n')
+
 def main():
 
     logging.basicConfig(level=logging.DEBUG,
@@ -121,6 +156,10 @@ def main():
     if rc.MAIL == '1':
         fit2 = MAIL(2)
         fit2.start()
+
+    if rc.UP == '1':
+        fit3 = UP(3)
+        fit3.start()
 
 if __name__ == '__main__':
     main()
