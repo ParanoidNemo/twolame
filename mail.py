@@ -57,6 +57,13 @@ css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
 new_mail = {}
 tot = len(m_info)
 
+if tot < 5:
+    nl = 5- tot
+    for l in range(nl):
+        m_info.append('')
+else:
+    pass
+
 for index, item in enumerate(m_info[-5:]):
     i = '{' + str(index) + '}'
     new_mail[i] = item
