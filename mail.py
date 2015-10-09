@@ -58,7 +58,7 @@ new_mail = {}
 tot = len(m_info)
 
 if tot < 5:
-    nl = 5- tot
+    nl = 5 - tot
     for l in range(nl):
         m_info.append('')
 else:
