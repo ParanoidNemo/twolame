@@ -37,7 +37,7 @@ if rc.SECURITY == 'imap':
     if rc.PLAIN == 'True':
         password = rc.PASS
     else:
-        password = keyring.get_password()
+        password = keyring.get_password(rc.SERVICE, rc.USER)
 
     try:
         m.login(rc.USER, password)
