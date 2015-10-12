@@ -31,16 +31,21 @@ if distro == 'debian':
 elif distro == 'fedora':
     up_check = subprocess.check_call(['dnf', 'check-update'])
 elif distro == 'archlinux':
-    up_check = subprocess.run(['checkupdates'], stdout=subprocess.PIPE, universal_newlines=True)
-    #up_check_aur = subprocess.check_call(['pacaur', '-k'])
+    up_check_repo = subprocess.run(['checkupdates'], stdout=subprocess.PIPE, universal_newlines=True)
+    up_check_aur = subprocess.run(['cower', '--color=never', '-uq'], stdout=subprocess.PIPE, universal_newlines=True)
+    up_check = up_check_repo.stdout + up_check_aur.stdout
 
 update = []
 
-for line in up_check.stdout.split():
+for line in up_check.split():
     if line.startswith('error'):
         pass
     else:
         update.append(line)
+
+rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
+
+rc.get_rc(rc_file)
 
 css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
 _update = {}
