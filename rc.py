@@ -10,6 +10,7 @@ def get_rc(rc_file):
     global FILESYSTEM, FS_UPDATE_PERIOD, MNT, MNT_NUM
     global MAIL, MAIL_UPDATE_PERIOD, SECURITY, SERVER, USER, PASS, PLAIN
     global UP, UP_UPDATE_PERIOD
+    global SERVICE
 
     # create the parser
     conf_parser = configparser.ConfigParser()
@@ -47,3 +48,6 @@ def get_rc(rc_file):
     # gather info for update module
     UP = conf_parser.get('twolame', 'start_update')
     UP_UPDATE_PERIOD = conf_parser.get('update', 'update_period')
+
+    # gather keyring info
+    SERVICE = conf_parser.get('mail', 'service')
