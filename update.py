@@ -24,12 +24,18 @@ import rc
 from spam import check
 from spam import beshell
 
+rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
+
+rc.get_rc(rc_file)
+
 distro = check.distro()
 
 if distro == 'debian':
-    up_check = subprocess.check_call(['aptitude', 'search', '"~U"'])
+    up_check_apt = subprocess.run(['aptitude', 'search', '"~U"'], stdout=subprocess.PIPE, universal_newlines=True)
+    up_check = up_check_apt.stdout
 elif distro == 'fedora':
-    up_check = subprocess.check_call(['dnf', 'check-update'])
+    up_check_dnf = subprocess.run(['dnf', 'check-update'], stdout=subprocess.PIPE, universal_newlines=True)
+    up_check = up_check_dnf.stdout
 elif distro == 'archlinux':
     up_check_repo = subprocess.run(['checkupdates'], stdout=subprocess.PIPE, universal_newlines=True)
     up_check_aur = subprocess.run(['cower', '--color=never', '-uq'], stdout=subprocess.PIPE, universal_newlines=True)
@@ -42,10 +48,6 @@ for line in up_check.split():
         pass
     else:
         update.append(line)
-
-rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
-
-rc.get_rc(rc_file)
 
 css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
 _update = {}
