@@ -18,33 +18,37 @@
 #   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #import std module(s)
-import os, sys
+import os, sys, re
+
+#import downloaded module(s)
+import musicpd
 
 #import custom module(s)
+import rc
 from spam import beshell
-from spam import musicinfo
+from spam import music
 
 #gathering information(s)
+rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
 
-#define run function
-def run():
-    global format_string
-    if not os.path.isdir(os.path.expanduser('~/.local/share/be.shell/fifo')):
-        os.makedirs(os.path.expanduser('~/.local/share/be.shell/fifo'))
-    try:
-        os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/mpd'))
-    except:
-        pass
+rc.get_rc(rc_file)
 
-#add info to fifo
+css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
 
-#-------------------------------------------------------------------------------
-#------------------------------DA CONTROLLARE-----------------------------------
-#-------------------------------------------------------------------------------
-with open(os.path.expanduser('~/.config/skutter/mpd.format')) as f:
-    for line in f:
-        if line.startswith('#'):
-            continue
-        self.format_string += line
+c = musicpd.MPDClient()
+c.timeout = 100
+c.idletimeout = 100
 
-self.format_string = re.sub(r'>\s+<', '><', self.format_string)
+info = {}
+info_pl = {}
+
+for index, item in enumerate(music.process_mpd(c)):
+    i = '{' + str(index) + '}'
+    info[i] = item
+info['{x}'] = css
+
+pl = ''
+for item in music.playlist(c):
+    pl += item
+
+info_pl['{playlist}'] = pl
