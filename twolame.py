@@ -138,6 +138,9 @@ class UP(threading.Thread):
         self.info = update._update
         self.outstring = insert_data(self.format_string, self.info)
 
+        self.outstring = re.sub(r'<tr><td></td></tr>', '', self.outstring)
+        self.outstring = re.sub(r'\n', '', self.outstring)
+
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_up'), 'w') as f:
             f.write(self.outstring)
             f.write('\n')
