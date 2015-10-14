@@ -82,7 +82,7 @@ class MAIL(threading.Thread):
         except:
             pass
 
-        with open(os.path.expanduser('~/.kde4/share/apps/be.shell/Themes/Hydrogen/twolame/mail.format')) as f:
+        with open(os.path.join(beshell.Theme.path(), 'twolame', 'mail.format')) as f:
             for line in f:
                 if line.startswith('#'):
                     continue
@@ -99,6 +99,9 @@ class MAIL(threading.Thread):
     def out(self):
         self.info = mail.new_mail
         self.outstring = insert_data(self.format_string, self.info)
+
+        self.outstring = re.sub(r'<br><br>', '', self.outstring)
+        self.outstring = re.sub(r'\n', '', self.outstring)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_mail'), 'w') as f:
             f.write(self.outstring)
