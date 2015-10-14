@@ -26,7 +26,7 @@ import time
 import importlib
 
 #import custom module(s)
-import filesystem, rc, mail, update
+import filesystem, rc, mail, update, mpc
 from spam import beshell
 
 #Replacement for string.format
@@ -120,7 +120,7 @@ class UP(threading.Thread):
         except:
             pass
 
-        with open(os.path.expanduser('~/.kde4/share/apps/be.shell/Themes/Hydrogen/twolame/up.format')) as f:
+        with open(os.path.join(beshell.Theme.path(), 'twolame', 'up.format')) as f:
             for line in f:
                 if line.startswith('#'):
                     continue
@@ -147,6 +147,46 @@ class UP(threading.Thread):
             f.write(self.outstring)
             f.write('\n')
 
+class MPD(threading.Thread):
+
+    def __init__(self, threadID):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.outstring = ''
+        self.format_string = ''
+
+        try:
+            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_music'))
+        except:
+            pass
+
+        with open(os.path.join(beshell.Theme.path(), 'twolame', 'music.format')) as f:
+            for line in f:
+                if line.startswith('#'):
+                    continue
+                self.format_string += line
+
+        self.format_string = re.sub(r'>\s<', '><', self.format_string)
+
+    def run(self):
+        while True:
+            importlib.reload(mpc)
+            self.out()
+            time.sleep(int(rc.MPD_UPDATE_PERIOD))
+
+    def out(self):
+        self.info = mpc.info
+        self.outstring = insert_data(self.format_string, self.info)
+
+        #self.outstring = re.sub(r'<tr><td></td></tr>', '', self.outstring)
+        #self.outstring = re.sub(r'\n', '', self.outstring)
+        #self.outstring = re.sub(r'<br><br>', '', self.outstring)
+        #self.outstring = re.sub(r'\n', '', self.outstring)
+
+        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_music'), 'w') as f:
+            f.write(self.outstring)
+            f.write('\n')
+
 def main():
 
     logging.basicConfig(level=logging.DEBUG,
@@ -168,6 +208,10 @@ def main():
     if rc.UP == '1':
         fit3 = UP(3)
         fit3.start()
+
+    if rc.MUSIC == '1':
+        fit4 = MPD(4)
+        fit4.start()
 
 if __name__ == '__main__':
     main()
