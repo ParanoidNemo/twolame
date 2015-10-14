@@ -42,10 +42,25 @@ c.idletimeout = 100
 info = {}
 info_pl = {}
 
+play = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'play.png')
+pause = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'pause.png')
+stop = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'stop.png')
+panel = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'dot.png')
+
 for index, item in enumerate(music.process_mpd(c)):
     i = '{' + str(index) + '}'
     info[i] = item
 info['{x}'] = css
+
+if c.status()['state'] == 'play':
+    toggle = pause
+elif c.status()['state'] == 'pause':
+    toggle = play
+else:
+    toggle = stop
+
+info['{button}'] = toggle
+info['{dot}'] = panel
 
 pl = ''
 for item in music.playlist(c):
