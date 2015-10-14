@@ -11,6 +11,7 @@ def get_rc(rc_file):
     global MAIL, MAIL_UPDATE_PERIOD, SECURITY, SERVER, USER, PASS, PLAIN
     global UP, UP_UPDATE_PERIOD
     global SERVICE
+    global MUSIC, MPD_UPDATE_PERIOD, PORT
 
     # create the parser
     conf_parser = configparser.ConfigParser()
@@ -51,3 +52,8 @@ def get_rc(rc_file):
 
     # gather keyring info
     SERVICE = conf_parser.get('mail', 'service')
+
+    # gather music info
+    MUSIC = conf_parser.get('twolame', 'start_music')
+    MPD_UPDATE_PERIOD = conf_parser.get('music', 'update_period')
+    PORT = conf_parser.get('music', 'port')
