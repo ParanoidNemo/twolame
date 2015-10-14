@@ -42,6 +42,8 @@ elif distro == 'archlinux':
     up_check = up_check_repo.stdout + up_check_aur.stdout
 
 update = []
+repo = []
+aur = []
 
 for line in up_check.split():
     if line.startswith('error'):
@@ -49,9 +51,19 @@ for line in up_check.split():
     else:
         update.append(line)
 
+if distro == 'archlinux':
+    for line in up_check_repo.stdout.split():
+        repo.append(line)
+    for line in up_check_aur.stdout.split():
+        aur.append(line)
+else:
+    pass
+
 css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
 _update = {}
 tot = len(update)
+tot_repo = len(repo)
+tot_aur = len(aur)
 
 if len(update) < 10:
     nl = 10 - tot
@@ -65,3 +77,7 @@ for index, item in enumerate(update[-10:]):
     _update[i] = item
 _update['{x}'] = css
 _update['{tot}'] = str(tot)
+_update['{repo}'] = str(tot_repo)
+_update['{aur}'] = str(tot_aur)
+
+#pkcon get-updates - packagekit
