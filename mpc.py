@@ -65,3 +65,6 @@ for item in music.playlist(c):
     pl += item
 
 info_pl['{playlist}'] = pl
+
+info_cv = music.cover(rc.COVER_PATH, c)
+info_cv['{x}'] = css
