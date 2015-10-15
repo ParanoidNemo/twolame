@@ -45,7 +45,7 @@ info_pl = {}
 play = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'play.png')
 pause = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'pause.png')
 stop = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'stop.png')
-panel = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'dot.png')
+panel = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'down.png')
 
 for index, item in enumerate(music.process_mpd(c)):
     i = '{' + str(index) + '}'
