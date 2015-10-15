@@ -36,8 +36,6 @@ rc.get_rc(rc_file)
 css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
 
 c = musicpd.MPDClient()
-c.timeout = 100
-c.idletimeout = 100
 
 info = {}
 info_pl = {}
