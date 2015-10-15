@@ -102,6 +102,8 @@ class MAIL(threading.Thread):
 
         self.outstring = re.sub(r'<br><br>', '', self.outstring)
         self.outstring = re.sub(r'\n', '', self.outstring)
+        self.outstring = re.sub(r'<br></table>', '</table>', self.outstring)
+        self.outstring = re.sub(r'\n', '', self.outstring)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_mail'), 'w') as f:
             f.write(self.outstring)
@@ -140,7 +142,7 @@ class UP(threading.Thread):
 
         self.outstring = re.sub(r'<tr><td></td></tr>', '', self.outstring)
         self.outstring = re.sub(r'\n', '', self.outstring)
-        self.outstring = re.sub(r'<br><br>', '', self.outstring)
+        self.outstring = re.sub(r'<br></table>', '</table>', self.outstring)
         self.outstring = re.sub(r'\n', '', self.outstring)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_up'), 'w') as f:
