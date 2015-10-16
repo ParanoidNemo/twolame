@@ -43,6 +43,7 @@ info_pl = {}
 play = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'play.png')
 pause = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'pause.png')
 stop = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'stop.png')
+
 panel = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'down.png')
 
 for index, item in enumerate(music.process_mpd(c)):
@@ -65,6 +66,7 @@ for item in music.playlist(c):
     pl += item
 
 info_pl['{playlist}'] = pl
+info_pl['{x}'] = css
 
 info_cv = music.cover(rc.COVER_PATH, c)
 info_cv['{x}'] = css
