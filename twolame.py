@@ -156,8 +156,10 @@ class MPD(threading.Thread):
         self.threadID = threadID
         self.outstring = ''
         self.outstring2 = ''
+        self.outstring3 = ''
         self.format_string = ''
         self.format_string2 = ''
+        self.format_string3 = ''
 
         try:
             os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_music'))
@@ -166,6 +168,11 @@ class MPD(threading.Thread):
 
         try:
             os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_cover'))
+        except:
+            pass
+
+        try:
+            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_playlist'))
         except:
             pass
 
@@ -184,6 +191,15 @@ class MPD(threading.Thread):
                 self.format_string2 += line
 
         self.format_string2 = re.sub(r'>\s<', '><', self.format_string2)
+
+        with open(os.path.join(beshell.Theme.path(), 'twolame', 'pl.format')) as p:
+            for line in p:
+                if line.startswith('#'):
+                    continue
+                self.format_string3 += line
+
+        self.format_string3 = re.sub(r'>\s<', '><', self.format_string3)
+        self.format_string3 = re.sub(r'\n', '', self.format_string3)
 
     def run(self):
         while True:
@@ -205,6 +221,13 @@ class MPD(threading.Thread):
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_cover'), 'w') as v:
             v.write(self.outstring2)
             v.write('\n')
+
+        self.pl = mpc.info_pl
+        self.outstring3 = insert_data(self.format_string3, self.pl)
+
+        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_playlist'), 'w') as p:
+            p.write(self.outstring3)
+            p.write('\n')
 
 def main():
 
