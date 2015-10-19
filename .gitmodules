@@ -1,3 +1,6 @@
 [submodule "spam"]
 	path = spam
 	url = https://github.com/ParanoidNemo/spam
+[submodule "wiki"]
+	path = wiki
+	url = https://github.com/ParanoidNemo/twolame.wiki.git
