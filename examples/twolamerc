@@ -1,0 +1,72 @@
+#   Copyright (C) 2015 by Andrea Calzavacca <paranoid.nemo@gmail.com>
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the
+#   Free Software Foundation, Inc.,
+#   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+# This file contains the user configuration for the modules existing in twolame
+# script. Please read the specific docstring to know how every single section works
+
+#-----------NEED TO THINK IF THAT'S THE WAY I WANT TO IMPLEMENT IT-----------
+
+[twolame]
+# choose what module you want to start (0 = off, 1 = on)
+start_mail = 1
+start_fs = 1
+start_update = 1
+start_music = 1
+
+# define the css file
+css_file = twolame.css
+
+#------------------------------FileSystem---------------------------------------
+
+[fs]
+
+# set the time between fs info update in seconds
+update_period = 600
+
+# define the number and path for the mount point (default 2, / and home)
+mnt_num = 2
+mount_point0 = /
+mount_point1 = ~
+#mount_point2 =
+#mount_point3 =
+#mount_point4 =
+
+#---------------------------------Mail------------------------------------------
+
+[mail]
+
+update_period = 600
+security = imap
+server = imap.gmail.com
+user =
+password =
+plain = False
+service = gmail
+
+#--------------------------------Update-----------------------------------------
+
+[update]
+
+update_period = 600
+
+#---------------------------------Music-----------------------------------------
+
+[music]
+
+update_period = 5
+port = 6600
+cover_path = ~/music
