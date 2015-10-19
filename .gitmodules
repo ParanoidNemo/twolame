@@ -1,0 +1,3 @@
+[submodule "spam"]
+	path = spam
+	url = https://github.com/ParanoidNemo/spam
