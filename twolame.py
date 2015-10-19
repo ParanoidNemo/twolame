@@ -220,7 +220,6 @@ class MPD(threading.Thread):
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_cover'), 'w') as v:
             v.write(self.outstring2)
-            v.write('\n')
 
         self.pl = mpc.info_pl
         self.outstring3 = insert_data(self.format_string3, self.pl)
