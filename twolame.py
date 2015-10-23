@@ -28,11 +28,7 @@ import importlib
 #import custom module(s)
 import filesystem, rc, mail, update, mpc
 from spam import beshell
-
-#Replacement for string.format
-def insert_data(string, rep_dict):
-    pattern = re.compile("|".join([re.escape(k) for k in rep_dict.keys()]), re.M)
-    return pattern.sub(lambda x: rep_dict[x.group(0)], string)
+from spam import methods
 
 class FS(threading.Thread):
 
@@ -63,7 +59,7 @@ class FS(threading.Thread):
 
     def out(self):
         self.info = filesystem._info
-        self.outstring = insert_data(self.format_string, self.info)
+        self.outstring = methods.insert_data(self.format_string, self.info)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_fs'), 'w') as f:
             f.write(self.outstring)
@@ -98,7 +94,7 @@ class MAIL(threading.Thread):
 
     def out(self):
         self.info = mail.new_mail
-        self.outstring = insert_data(self.format_string, self.info)
+        self.outstring = methods.insert_data(self.format_string, self.info)
 
         self.outstring = re.sub(r'<br><br>', '', self.outstring)
         self.outstring = re.sub(r'\n', '', self.outstring)
@@ -138,7 +134,7 @@ class UP(threading.Thread):
 
     def out(self):
         self.info = update._update
-        self.outstring = insert_data(self.format_string, self.info)
+        self.outstring = methods.insert_data(self.format_string, self.info)
 
         self.outstring = re.sub(r'<tr><td></td></tr>', '', self.outstring)
         self.outstring = re.sub(r'\n', '', self.outstring)
@@ -209,20 +205,20 @@ class MPD(threading.Thread):
 
     def out(self):
         self.info = mpc.info
-        self.outstring = insert_data(self.format_string, self.info)
+        self.outstring = methods.insert_data(self.format_string, self.info)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_music'), 'w') as f:
             f.write(self.outstring)
             f.write('\n')
 
         self.cover = mpc.info_cv
-        self.outstring2 = insert_data(self.format_string2, self.cover)
+        self.outstring2 = methods.insert_data(self.format_string2, self.cover)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_cover'), 'w') as v:
             v.write(self.outstring2)
 
         self.pl = mpc.info_pl
-        self.outstring3 = insert_data(self.format_string3, self.pl)
+        self.outstring3 = methods.insert_data(self.format_string3, self.pl)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_playlist'), 'w') as p:
             p.write(self.outstring3)
