@@ -29,7 +29,7 @@ def get_rc(rc_file):
     global UP, UP_UPDATE_PERIOD
     global SERVICE
     global MUSIC, MPD_UPDATE_PERIOD, PORT, COVER_PATH
-    global CLOUD, CLOUD_UPDATE_PERIOD, REMOTE, LOCAL, SIZE
+    global CLOUD, CLOUD_UPDATE_PERIOD, REMOTE, REMOTE1, REMOTE2, LOCAL, LOCAL1, LOCAL2, SIZE
 
     # create the parser
     conf_parser = configparser.ConfigParser()
@@ -81,5 +81,9 @@ def get_rc(rc_file):
     CLOUD = conf_parser.get('twolame', 'start_cloud')
     CLOUD_UPDATE_PERIOD = conf_parser.get('cloud', 'update_period')
     REMOTE = conf_parser.get('cloud', 'remote')
+    REMOTE = conf_parser.get('cloud', 'remote1')
+    REMOTE = conf_parser.get('cloud', 'remote2')
     LOCAL = conf_parser.get('cloud', 'local')
+    LOCAL = conf_parser.get('cloud', 'local1')
+    LOCAL = conf_parser.get('cloud', 'local2')
     SIZE = conf_parser.get('cloud', 'size')
