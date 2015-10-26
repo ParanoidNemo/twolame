@@ -9,7 +9,7 @@ import time
 import importlib
 
 #import custom module(s)
-import filesystem, rc, mail, update, mpc
+import filesystem, rc, mail, update, mpc, cloud
 from spam import beshell
 from spam import methods
 
@@ -45,6 +45,46 @@ class FS(threading.Thread):
         self.outstring = methods.insert_data(self.format_string, self.info)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_fs'), 'w') as f:
+            f.write(self.outstring)
+            f.write('\n')
+
+class CLOUD(threading.Thread):
+
+    def __init__(self, threadID):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.outstring = ''
+        self.format_string = ''
+
+        try:
+            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_cloud'))
+        except:
+            pass
+
+        with open(os.path.expanduser('~/.kde4/share/apps/be.shell/Themes/Hydrogen/twolame/cloud.format')) as f:
+            for line in f:
+                if line.startswith('#'):
+                    continue
+                self.format_string += line
+
+        self.format_string = re.sub(r'>\s<', '><', self.format_string)
+
+    def run(self):
+        while True:
+            importlib.reload(cloud)
+            self.out()
+            time.sleep(int(rc.CLOUD_UPDATE_PERIOD))
+
+    def out(self):
+        self.info = cloud.info
+        self.outstring = methods.insert_data(self.format_string, self.info)
+
+        self.outstring = re.sub(r'<br><br>', '', self.outstring)
+        self.outstring = re.sub(r'\n', '', self.outstring)
+        self.outstring = re.sub(r'<br></table>', '</table>', self.outstring)
+        self.outstring = re.sub(r'\n', '', self.outstring)
+
+        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_cloud'), 'w') as f:
             f.write(self.outstring)
             f.write('\n')
 
@@ -232,6 +272,10 @@ def main():
     if rc.MUSIC == '1':
         fit4 = MPD(4)
         fit4.start()
+
+    if rc.CLOUD == '1':
+        fit5 = CLOUD(5)
+        fit5.start()
 
 if __name__ == '__main__':
     main()
