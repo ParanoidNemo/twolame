@@ -22,7 +22,49 @@ import os, sys, re
 import rc
 from spam import clouds
 from spam import beshell
+from spam import methods
 
 rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
 
 rc.get_rc(rc_file)
+
+css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
+
+format_string = ''
+with open(os.path.expanduser('~/.kde4/share/apps/be.shell/Themes/Hydrogen/twolame/cloud_one.format')) as f:
+    for line in f:
+        if line.startswith('#'):
+            continue
+        format_string += line
+
+format_string = re.sub(r'>\s<', '><', format_string)
+format_string = re.sub(r'\n', '', format_string)
+
+cloud_info = []
+
+d = clouds.Rclone.space_info(rc.REMOTE, 'dropbox')
+_d = methods.create_dict(d)
+outstring = methods.insert_data(format_string, _d)
+
+cloud_info.append(outstring)
+
+a = clouds.Rclone.space_info(rc.REMOTE1, 'drive')
+_a = methods.create_dict(a)
+outstring = methods.insert_data(format_string, _a)
+
+cloud_info.append(outstring)
+
+p = clouds.Rclone.space_info(rc.REMOTE2, 'drive')
+_p = methods.create_dict(p)
+outstring = methods.insert_data(format_string, _p)
+
+cloud_info.append(outstring)
+
+m = clouds.Mega.space_info(rc.SIZE)
+_m = methods.create_dict(m)
+outstring = methods.insert_data(format_string, _m)
+
+cloud_info.append(outstring)
+
+info = methods.create_dict(cloud_info)
+info['{x}'] = css
