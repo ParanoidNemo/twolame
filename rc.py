@@ -7,7 +7,7 @@ def get_rc(rc_file):
 
     # define the global var
     global CSS
-    global FILESYSTEM, FS_UPDATE_PERIOD, MNT, MNT_NUM
+    global FILESYSTEM, FS_UPDATE_PERIOD, MNT, MNT_NUM, FM
     global MAIL, MAIL_UPDATE_PERIOD, SECURITY, SERVER, USER, PASS, PLAIN
     global UP, UP_UPDATE_PERIOD
     global SERVICE
@@ -23,6 +23,7 @@ def get_rc(rc_file):
 
     # gather info for fs module
     FILESYSTEM = conf_parser.get('twolame', 'start_fs')
+    FM = conf_parser.get('fs', 'fm')
     FS_UPDATE_PERIOD = conf_parser.get('fs', 'update_period')
     MNT_NUM = conf_parser.get('fs', 'mnt_num')
     try:
