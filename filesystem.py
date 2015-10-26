@@ -20,6 +20,7 @@
 import os
 from spam import fs
 from spam import beshell
+from spam import methods
 import rc
 
 rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
@@ -45,6 +46,7 @@ except Exception:
     raise
 
 css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
+fm = rc.FM
 info = []
 _info = {}
 
@@ -56,7 +58,6 @@ for item in dev:
     info.append(fs.fs_info(item)['pfree'])
     info.append(fs.fs_info(item)['pused'])
 
-for index, item in enumerate(info):
-    i = '{' + str(index) + '}'
-    _info[i] = item
+_info = methods.create_dict(info)
 _info['{x}'] = css
+_info['{e}'] = fm
