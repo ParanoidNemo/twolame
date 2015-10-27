@@ -48,7 +48,6 @@ except Exception:
 css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
 fm = rc.FM
 info = []
-_info = {}
 
 for item in dev:
     info.append(fs.fs_info(item)['mount'])
