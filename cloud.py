@@ -18,6 +18,7 @@
 #   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 import os, sys, re
+import configparser
 
 import rc
 from spam import clouds
@@ -42,23 +43,20 @@ format_string = re.sub(r'\n', '', format_string)
 
 cloud_info = []
 
-d = clouds.Rclone.space_info(rc.REMOTE, 'dropbox')
-_d = methods.create_dict(d)
-outstring = methods.insert_data(format_string, _d)
+if rc.RCLONE == '1':
 
-cloud_info.append(outstring)
+    parser = configparser.ConfigParser()
+    rclone_cfg = rc.RCLONE_CONFIG_FILE
+    read_cfg = parser.read(rclone_cfg)
 
-a = clouds.Rclone.space_info(rc.REMOTE1, 'drive')
-_a = methods.create_dict(a)
-outstring = methods.insert_data(format_string, _a)
+    services_list = []
 
-cloud_info.append(outstring)
-
-p = clouds.Rclone.space_info(rc.REMOTE2, 'drive')
-_p = methods.create_dict(p)
-outstring = methods.insert_data(format_string, _p)
-
-cloud_info.append(outstring)
+    for item in parser.sections():
+        service = parser.get(item, 'type')
+        l = clouds.Rclone.space_info(item, service)
+        d = methods.create_dict(l)
+        outstring = methods.insert_data(format_string, d)
+        cloud_info.append(outstring)
 
 m = clouds.Mega.space_info(rc.SIZE)
 _m = methods.create_dict(m)
