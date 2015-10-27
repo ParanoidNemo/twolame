@@ -46,14 +46,14 @@ if rc.RCLONE == '1':
         service = parser.get(item, 'type')
         l = clouds.Rclone.space_info(item, service)
         d = methods.create_dict(l)
-        outstring = methods.insert_data(methods.format(format_file), d)
+        outstring = methods.insert_data(methods.format_string(format_file), d)
         cloud_info.append(outstring)
 
 if rc.MEGA == '1':
 
     l = clouds.Mega.space_info(rc.SIZE)
     d = methods.create_dict(l)
-    outstring = methods.insert_data(methods.format(format_file), d)
+    outstring = methods.insert_data(methods.format_string(format_file), d)
     cloud_info.append(outstring)
 
 info = methods.create_dict(cloud_info)
