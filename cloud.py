@@ -26,20 +26,11 @@ from spam import beshell
 from spam import methods
 
 rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
+format_file = os.path.join(beshell.Theme.path(), 'twolame', 'cloud_one.format')
 
 rc.get_rc(rc_file)
 
 css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
-
-format_string = ''
-with open(os.path.expanduser('~/.kde4/share/apps/be.shell/Themes/Hydrogen/twolame/cloud_one.format')) as f:
-    for line in f:
-        if line.startswith('#'):
-            continue
-        format_string += line
-
-format_string = re.sub(r'>\s<', '><', format_string)
-format_string = re.sub(r'\n', '', format_string)
 
 cloud_info = []
 
@@ -55,14 +46,14 @@ if rc.RCLONE == '1':
         service = parser.get(item, 'type')
         l = clouds.Rclone.space_info(item, service)
         d = methods.create_dict(l)
-        outstring = methods.insert_data(format_string, d)
+        outstring = methods.insert_data(methods.format(format_file), d)
         cloud_info.append(outstring)
 
 if rc.MEGA == '1':
 
     l = clouds.Mega.space_info(rc.SIZE)
     d = methods.create_dict(l)
-    outstring = methods.insert_data(format_string, d)
+    outstring = methods.insert_data(methods.format(format_file), d)
     cloud_info.append(outstring)
 
 info = methods.create_dict(cloud_info)
