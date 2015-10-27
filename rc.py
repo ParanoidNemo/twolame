@@ -12,8 +12,9 @@ def get_rc(rc_file):
     global UP, UP_UPDATE_PERIOD
     global SERVICE
     global MUSIC, MPD_UPDATE_PERIOD, PORT, COVER_PATH
-    global CLOUD, CLOUD_UPDATE_PERIOD, REMOTE, REMOTE1, REMOTE2, LOCAL, LOCAL1, LOCAL2, SIZE
+    global CLOUD, CLOUD_UPDATE_PERIOD, LOCAL, LOCAL1, LOCAL2
     global RCLONE, RCLONE_SECTIONS, RCLONE_CONFIG_FILE
+    global MEGA, SIZE
 
     # create the parser
     conf_parser = configparser.ConfigParser()
@@ -68,9 +69,12 @@ def get_rc(rc_file):
     LOCAL = conf_parser.get('cloud', 'local')
     LOCAL1 = conf_parser.get('cloud', 'local1')
     LOCAL2 = conf_parser.get('cloud', 'local2')
-    SIZE = conf_parser.get('cloud', 'size')
 
     # gather rclone info
     RCLONE = conf_parser.get('cloud', 'use_rclone')
     RCLONE_SECTIONS = conf_parser.sections()
     RCLONE_CONFIG_FILE = conf_parser.get('cloud', 'rclone_config')
+
+    # gather mega info
+    MEGA = conf_parser.get('cloud', 'use_mega')
+    SIZE = conf_parser.get('cloud', 'size')
