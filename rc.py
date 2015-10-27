@@ -13,6 +13,7 @@ def get_rc(rc_file):
     global SERVICE
     global MUSIC, MPD_UPDATE_PERIOD, PORT, COVER_PATH
     global CLOUD, CLOUD_UPDATE_PERIOD, REMOTE, REMOTE1, REMOTE2, LOCAL, LOCAL1, LOCAL2, SIZE
+    global RCLONE, RCLONE_SECTIONS, RCLONE_CONFIG_FILE
 
     # create the parser
     conf_parser = configparser.ConfigParser()
@@ -64,10 +65,12 @@ def get_rc(rc_file):
     # gather cloud info
     CLOUD = conf_parser.get('twolame', 'start_cloud')
     CLOUD_UPDATE_PERIOD = conf_parser.get('cloud', 'update_period')
-    REMOTE = conf_parser.get('cloud', 'remote')
-    REMOTE1 = conf_parser.get('cloud', 'remote1')
-    REMOTE2 = conf_parser.get('cloud', 'remote2')
     LOCAL = conf_parser.get('cloud', 'local')
     LOCAL1 = conf_parser.get('cloud', 'local1')
     LOCAL2 = conf_parser.get('cloud', 'local2')
     SIZE = conf_parser.get('cloud', 'size')
+
+    # gather rclone info
+    RCLONE = conf_parser.get('cloud', 'use_rclone')
+    RCLONE_SECTIONS = conf_parser.sections()
+    RCLONE_CONFIG_FILE = conf_parser.get('cloud', 'rclone_config')
