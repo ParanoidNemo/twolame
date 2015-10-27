@@ -25,6 +25,7 @@ import keyring
 import rc
 from spam import webmail
 from spam import beshell
+from spam import methods
 
 rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
 
@@ -64,9 +65,7 @@ if tot < 5:
 else:
     pass
 
-for index, item in enumerate(m_info[-5:]):
-    i = '{' + str(index) + '}'
-    new_mail[i] = item
+new_mail = methods.create_dict(m_info[-5:])
 new_mail['{x}'] = css
 new_mail['{tot}'] = str(tot)
 new_mail['{user}'] = rc.USER

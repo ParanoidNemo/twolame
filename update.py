@@ -23,6 +23,7 @@ import subprocess
 import rc
 from spam import check
 from spam import beshell
+from spam import methods
 
 rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
 
@@ -60,7 +61,6 @@ else:
     pass
 
 css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
-_update = {}
 tot = len(update)
 tot_repo = len(repo)
 tot_aur = len(aur)
@@ -72,9 +72,7 @@ if len(update) < 10:
 else:
     pass
 
-for index, item in enumerate(update[-10:]):
-    i = '{' + str(index) + '}'
-    _update[i] = item
+_update = methods.create_dict(update[-10:])
 _update['{x}'] = css
 _update['{tot}'] = str(tot)
 _update['{repo}'] = str(tot_repo)
