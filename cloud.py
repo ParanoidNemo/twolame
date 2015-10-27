@@ -58,11 +58,12 @@ if rc.RCLONE == '1':
         outstring = methods.insert_data(format_string, d)
         cloud_info.append(outstring)
 
-m = clouds.Mega.space_info(rc.SIZE)
-_m = methods.create_dict(m)
-outstring = methods.insert_data(format_string, _m)
+if rc.MEGA == '1':
 
-cloud_info.append(outstring)
+    l = clouds.Mega.space_info(rc.SIZE)
+    d = methods.create_dict(l)
+    outstring = methods.insert_data(format_string, d)
+    cloud_info.append(outstring)
 
 info = methods.create_dict(cloud_info)
 info['{x}'] = css
