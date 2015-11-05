@@ -9,17 +9,18 @@ import time
 import importlib
 
 #import custom module(s)
-import filesystem, rc, mail, update, mpc, cloud
+import rc
 from spam import beshell
 from spam import methods
 
 class FS(threading.Thread):
 
     def __init__(self, threadID):
-        threading.Thread.__init__(self)
+        threading.Thread.__in,it__(self)
         self.threadID = threadID
         self.outstring = ''
         self.format_string = ''
+        self.f = __import__("filesystem")
 
         try:
             os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_fs'))
@@ -36,12 +37,14 @@ class FS(threading.Thread):
 
     def run(self):
         while True:
-            importlib.reload(filesystem)
+
+            importlib.reload(self.f)
+
             self.out()
             time.sleep(int(rc.FS_UPDATE_PERIOD))
 
     def out(self):
-        self.info = filesystem._info
+        self.info = self.f._info
         self.outstring = methods.insert_data(self.format_string, self.info)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_fs'), 'w') as f:
@@ -55,6 +58,7 @@ class CLOUD(threading.Thread):
         self.threadID = threadID
         self.outstring = ''
         self.format_string = ''
+        self.c = __import__("cloud")
 
         try:
             os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_cloud'))
@@ -71,12 +75,14 @@ class CLOUD(threading.Thread):
 
     def run(self):
         while True:
-            importlib.reload(cloud)
+
+            importlib.reload(self.c)
+
             self.out()
             time.sleep(int(rc.CLOUD_UPDATE_PERIOD))
 
     def out(self):
-        self.info = cloud.info
+        self.info = self.c.info
         self.outstring = methods.insert_data(self.format_string, self.info)
 
         self.outstring = re.sub(r'<br><br>', '', self.outstring)
@@ -95,6 +101,7 @@ class MAIL(threading.Thread):
         self.threadID = threadID
         self.outstring = ''
         self.format_string = ''
+        self.a = __import__("mail")
 
         try:
             os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_mail'))
@@ -111,12 +118,14 @@ class MAIL(threading.Thread):
 
     def run(self):
         while True:
-            importlib.reload(mail)
+
+            importlib.reload(self.a)
+
             self.out()
             time.sleep(int(rc.MAIL_UPDATE_PERIOD))
 
     def out(self):
-        self.info = mail.new_mail
+        self.info = self.a.new_mail
         self.outstring = methods.insert_data(self.format_string, self.info)
 
         self.outstring = re.sub(r'<br><br>', '', self.outstring)
@@ -135,6 +144,7 @@ class UP(threading.Thread):
         self.threadID = threadID
         self.outstring = ''
         self.format_string = ''
+        self.u = __import__("update")
 
         try:
             os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_up'))
@@ -151,12 +161,14 @@ class UP(threading.Thread):
 
     def run(self):
         while True:
-            importlib.reload(update)
+
+            importlib.reload(self.u)
+
             self.out()
             time.sleep(int(rc.UP_UPDATE_PERIOD))
 
     def out(self):
-        self.info = update._update
+        self.info = self.u._update
         self.outstring = methods.insert_data(self.format_string, self.info)
 
         self.outstring = re.sub(r'<tr><td></td></tr>', '', self.outstring)
@@ -179,6 +191,7 @@ class MPD(threading.Thread):
         self.format_string = ''
         self.format_string2 = ''
         self.format_string3 = ''
+        self.m = __import__("mpc")
 
         try:
             os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_music'))
@@ -222,25 +235,27 @@ class MPD(threading.Thread):
 
     def run(self):
         while True:
-            importlib.reload(mpc)
+
+            importlib.reload(self.m)
+
             self.out()
             time.sleep(int(rc.MPD_UPDATE_PERIOD))
 
     def out(self):
-        self.info = mpc.info
+        self.info = self.m.info
         self.outstring = methods.insert_data(self.format_string, self.info)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_music'), 'w') as f:
             f.write(self.outstring)
             f.write('\n')
 
-        self.cover = mpc.info_cv
+        self.cover = self.m.info_cv
         self.outstring2 = methods.insert_data(self.format_string2, self.cover)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_cover'), 'w') as v:
             v.write(self.outstring2)
 
-        self.pl = mpc.info_pl
+        self.pl = self.m.info_pl
         self.outstring3 = methods.insert_data(self.format_string3, self.pl)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_playlist'), 'w') as p:
