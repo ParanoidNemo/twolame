@@ -16,7 +16,7 @@ from spam import methods
 class FS(threading.Thread):
 
     def __init__(self, threadID):
-        threading.Thread.__in,it__(self)
+        threading.Thread.__init__(self)
         self.threadID = threadID
         self.outstring = ''
         self.format_string = ''
