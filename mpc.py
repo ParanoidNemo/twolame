@@ -65,5 +65,6 @@ for item in music.playlist(c):
 
 info_pl = {'{playlist}': pl, '{x}': css}
 
-info_cv = music.cover(rc.COVER_PATH, c)
-info_cv['{x}'] = css
+info_cv = methods.create_dict(music.process_mpd(c))
+info_cv["{cover}"] = music.cover(rc.COVER_PATH, c)
+info_cv["{x}"] = css
