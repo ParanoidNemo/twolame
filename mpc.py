@@ -63,7 +63,12 @@ pl = ''
 for item in music.playlist(c):
     pl += item
 
-info_pl = {'{playlist}': pl, '{x}': css}
+if c.status()['random'] == '1':
+    shuffle = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'shuffle_check.png')
+else:
+    shuffle = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'shuffle.png')
+
+info_pl = {"{playlist}": pl, "{x}": css, "{shuffle}": shuffle}
 
 info_cv = methods.create_dict(music.process_mpd(c))
 info_cv["{cover}"] = music.cover(rc.COVER_PATH, c)
