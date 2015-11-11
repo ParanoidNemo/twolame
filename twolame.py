@@ -33,21 +33,21 @@ import rc
 from spam import beshell
 from spam import methods
 
-class FS(threading.Thread):
+class SYSTEM(threading.Thread):
 
     def __init__(self, threadID):
         threading.Thread.__init__(self)
         self.threadID = threadID
         self.outstring = ''
         self.format_string = ''
-        self.f = __import__("filesystem")
+        self.s = __import__("system")
 
         try:
-            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_fs'))
+            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_system'))
         except:
             pass
 
-        with open(os.path.expanduser('~/.kde4/share/apps/be.shell/Themes/Hydrogen/twolame/fs.format')) as f:
+        with open(os.path.join(beshell.Theme.path(), 'twolame', 'system.format')) as f:
             for line in f:
                 if line.startswith('#'):
                     continue
@@ -58,16 +58,20 @@ class FS(threading.Thread):
     def run(self):
         while True:
 
-            importlib.reload(self.f)
+            importlib.reload(self.s)
 
             self.out()
             time.sleep(int(rc.FS_UPDATE_PERIOD))
 
     def out(self):
-        self.info = self.f._info
+        self.info = self.s.si_dict
         self.outstring = methods.insert_data(self.format_string, self.info)
 
-        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_fs'), 'w') as f:
+        #self.outstring = re.sub(r'\n', '', self.outstring)
+        self.outstring = re.sub(r'<tr></tr>', '', self.outstring)
+        self.outstring = re.sub(r'\n', '', self.outstring)
+
+        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_system'), 'w') as f:
             f.write(self.outstring)
             f.write('\n')
 
@@ -293,7 +297,7 @@ def main():
     rc.get_rc(rc_file)
 
     if rc.FILESYSTEM == '1':
-        fit1 = FS(1)
+        fit1 = SYSTEM(1)
         fit1.start()
 
     if rc.MAIL == '1':
