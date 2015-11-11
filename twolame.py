@@ -67,7 +67,6 @@ class SYSTEM(threading.Thread):
         self.info = self.s.si_dict
         self.outstring = methods.insert_data(self.format_string, self.info)
 
-        #self.outstring = re.sub(r'\n', '', self.outstring)
         self.outstring = re.sub(r'<tr></tr>', '', self.outstring)
         self.outstring = re.sub(r'\n', '', self.outstring)
 
@@ -158,49 +157,6 @@ class MAIL(threading.Thread):
         self.outstring = re.sub(r'\n', '', self.outstring)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_mail'), 'w') as f:
-            f.write(self.outstring)
-            f.write('\n')
-
-class UP(threading.Thread):
-
-    def __init__(self, threadID):
-        threading.Thread.__init__(self)
-        self.threadID = threadID
-        self.outstring = ''
-        self.format_string = ''
-        self.u = __import__("update")
-
-        try:
-            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_up'))
-        except:
-            pass
-
-        with open(os.path.join(beshell.Theme.path(), 'twolame', 'up.format')) as f:
-            for line in f:
-                if line.startswith('#'):
-                    continue
-                self.format_string += line
-
-        self.format_string = re.sub(r'>\s<', '><', self.format_string)
-
-    def run(self):
-        while True:
-
-            importlib.reload(self.u)
-
-            self.out()
-            time.sleep(int(rc.UP_UPDATE_PERIOD))
-
-    def out(self):
-        self.info = self.u._update
-        self.outstring = methods.insert_data(self.format_string, self.info)
-
-        self.outstring = re.sub(r'<tr><td></td></tr>', '', self.outstring)
-        self.outstring = re.sub(r'\n', '', self.outstring)
-        self.outstring = re.sub(r'<br></table>', '</table>', self.outstring)
-        self.outstring = re.sub(r'\n', '', self.outstring)
-
-        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_up'), 'w') as f:
             f.write(self.outstring)
             f.write('\n')
 
@@ -303,10 +259,6 @@ def main():
     if rc.MAIL == '1':
         fit2 = MAIL(2)
         fit2.start()
-
-    if rc.UP == '1':
-        fit3 = UP(3)
-        fit3.start()
 
     if rc.MUSIC == '1':
         fit4 = MPD(4)
