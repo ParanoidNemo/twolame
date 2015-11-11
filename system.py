@@ -63,7 +63,7 @@ ram = system_info.ram()
 # fs info
 for item in rc.MNT:
 
-    l = system_info.fs(item):
+    l = system_info.fs(item)
     o = methods.create_dict(l)
     out = methods.insert_data(methods.format_string(fs_format_file), o)
 
@@ -74,10 +74,10 @@ si_dict = methods.create_dict(si)
 si_dict["{distro}"] = ds
 si_dict["{de}"] = de
 si_dict["{wm}"] = wm
-si_dict["{ut_days}"] = ut[0]
-si_dict["{ut_hours}"] = ut[1]
-si_dict["{ut_minutes}"] = ut[2]
-si_dict["{ut_seconds}"] = ut[3]
+si_dict["{ut_days}"] = str(ut[0])
+si_dict["{ut_hours}"] = str(ut[1])
+si_dict["{ut_minutes}"] = str(ut[2])
+si_dict["{ut_seconds}"] = str(ut[3])
 si_dict["{hostname}"] = mi[1]
 si_dict["{kernel_build}"] = mi[2]
 si_dict["{architecture}"] = mi[4]
