@@ -98,33 +98,3 @@ try:
     si_dict["{aur}"] = update[1]
 except Exception:
     pass
-
-#----------------------------------old code-------------------------------------
-
-#try:
-#    mnt0 = os.path.expanduser(rc.MNT[0])
-#    dev.append(mnt0)
-#    mnt1 = os.path.expanduser(rc.MNT[1])
-#    dev.append(mnt1)
-#    mnt2 = os.path.expanduser(rc.MNT[2])
-#    dev.append(mnt2)
-#    mnt3 = os.path.expanduser(rc.MNT[3])
-#    dev.append(mnt3)
-#    mnt4 = os.path.expanduser(rc.MNT[4])
-#    dev.append(mnt4)
-#except IndexError:
-#    pass
-#except Exception:
-#    raise
-
-#info = []
-
-#for item in dev:
-#    info.append(fs.fs_info(item)['mount'])
-#    info.append(fs.fs_info(item)['free'])
-#    info.append(fs.fs_info(item)['tot'])
-#    info.append(fs.fs_info(item)['used'])
-#    info.append(fs.fs_info(item)['pfree'])
-#    info.append(fs.fs_info(item)['pused'])
-
-#_info = methods.create_dict(info)
