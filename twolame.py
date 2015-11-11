@@ -151,9 +151,7 @@ class MAIL(threading.Thread):
         self.info = self.a.new_mail
         self.outstring = methods.insert_data(self.format_string, self.info)
 
-        self.outstring = re.sub(r'<br><br>', '', self.outstring)
-        self.outstring = re.sub(r'\n', '', self.outstring)
-        self.outstring = re.sub(r'<br></table>', '</table>', self.outstring)
+        self.outstring = re.sub(r'<tr><td colspan="2"><hr align="center" size="1" width="392"></td></tr><tr><td colspan="2"><hr align="center" size="1" width="392"></td></tr>', '', self.outstring)
         self.outstring = re.sub(r'\n', '', self.outstring)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_mail'), 'w') as f:
