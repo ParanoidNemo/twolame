@@ -28,8 +28,9 @@ rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
 
 rc.get_rc(rc_file)
 
-css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
+css = os.path.join(beshell.Theme.path(), 'style.css.d', 'tl_system.css')
 fm = rc.FM
+pm = rc.PM
 
 si = []
 
@@ -60,6 +61,9 @@ cpu = system_info.cpu()
 # ram info
 ram = system_info.ram()
 
+# update info
+update = system_info.update(pm)
+
 # fs info
 for item in rc.MNT:
 
@@ -68,7 +72,7 @@ for item in rc.MNT:
     out = methods.insert_data(methods.format_string(fs_format_file), o)
 
     si.append(out)
-#--------------------------------creating dict----------------------------------
+#--------------------------------popolate dict----------------------------------
 
 si_dict = methods.create_dict(si)
 si_dict["{distro}"] = ds
@@ -89,6 +93,11 @@ si_dict["{ram_used_perc}"] = ram[7]
 si_dict["{ram_free_perc}"] = ram[8]
 si_dict["{x}"] = css
 si_dict["{e}"] = fm
+si_dict["{updates}"] = update[0]
+try:
+    si_dict["{aur}"] = update[1]
+except Exception:
+    pass
 
 #----------------------------------old code-------------------------------------
 
