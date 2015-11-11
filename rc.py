@@ -29,7 +29,7 @@ def get_rc(rc_file):
     global CSS
     global FILESYSTEM, FS_UPDATE_PERIOD, MNT, MNT_NUM, FM
     global MAIL, MAIL_UPDATE_PERIOD, SECURITY, SERVER, USER, PASS, PLAIN
-    global UP, UP_UPDATE_PERIOD
+    global UP, UP_UPDATE_PERIOD, PM
     global SERVICE
     global MUSIC, MPD_UPDATE_PERIOD, PORT, COVER_PATH
     global CLOUD, CLOUD_UPDATE_PERIOD, LOCAL, LOCAL1, LOCAL2
@@ -72,6 +72,7 @@ def get_rc(rc_file):
     # gather info for update module
     UP = conf_parser.get('twolame', 'start_update')
     UP_UPDATE_PERIOD = conf_parser.get('update', 'update_period')
+    PM = conf_parser.get("update", "pm")
 
     # gather keyring info
     SERVICE = conf_parser.get('mail', 'service')
