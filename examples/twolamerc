@@ -23,7 +23,7 @@
 [twolame]
 # choose what module you want to start (0 = off, 1 = on)
 start_mail = 1
-start_fs = 1
+start_system = 1
 start_update = 1
 start_music = 1
 
@@ -32,7 +32,7 @@ css_file = twolame.css
 
 #------------------------------FileSystem---------------------------------------
 
-[fs]
+[system]
 
 # set the time between fs info update in seconds
 update_period = 600
