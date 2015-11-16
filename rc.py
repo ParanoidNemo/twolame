@@ -27,7 +27,7 @@ def get_rc(rc_file):
 
     # define the global var
     global CSS
-    global FILESYSTEM, FS_UPDATE_PERIOD, MNT, MNT_NUM, FM
+    global FILESYSTEM, FS_UPDATE_PERIOD, MNT, FM
     global MAIL, MAIL_UPDATE_PERIOD, SECURITY, SERVER, USER, PASS, PLAIN
     global UP, UP_UPDATE_PERIOD, PM
     global SERVICE
@@ -47,18 +47,7 @@ def get_rc(rc_file):
     FILESYSTEM = conf_parser.get('twolame', 'start_system')
     FM = conf_parser.get('system', 'fm')
     FS_UPDATE_PERIOD = conf_parser.get('system', 'update_period')
-    MNT_NUM = conf_parser.get('system', 'mnt_num')
-    try:
-        MNT = []
-        for i in range(int(MNT_NUM)):
-            _i = str(i)
-            if conf_parser.get('system', 'mount_point' + _i) != '':
-                MNT.append(conf_parser.get('system', 'mount_point' + _i))
-            else:
-                pass
-
-    except Exception as ex:
-        print(ex)
+    MNT = conf_parser.get('system', 'mnt')
 
     # gather info for email module
     MAIL = conf_parser.get('twolame', 'start_mail')
@@ -67,7 +56,7 @@ def get_rc(rc_file):
     SERVER = conf_parser.get('mail', 'server')
     USER = conf_parser.get('mail', 'user')
     PASS = conf_parser.get('mail', 'password')
-    PLAIN = conf_parser.get('mail', 'plain')
+    PLAIN = conf_parser.getboolean('mail', 'plain')
 
     # gather info for update module
     UP = conf_parser.get('twolame', 'start_update')
