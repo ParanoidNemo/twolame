@@ -30,37 +30,60 @@ from spam import methods
 rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
 
 rc.get_rc(rc_file)
+i = 0
 
-if rc.SECURITY == 'imap':
+m_info = []
 
-    m = imaplib.IMAP4_SSL(rc.SERVER)
-
-    if rc.PLAIN == 'True':
-        password = rc.PASS
-    else:
-        password = keyring.get_password(rc.SERVICE, rc.USER)
+for item in rc.USER.split(','):
 
     try:
-        m.login(rc.USER, password)
-    except imaplib.IMAP4.error:
-        print("Error: Login Failed\nPlease check your username and password")
+        if len(rc.SECURITY.split(',')) == 1:
+            sec = rc.SECURITY
+        else:
+            sec = rc.SECURITY.split(',')[i]
 
-    rv, data = m.select("INBOX", readonly=True)
-    if rv == 'OK':
-        m_info = webmail.process_mailbox(m)
-        m.close()
-    m.logout()
+        if sec == 'imap':
 
-else:
-    pass
+            if len(rc.SERVER.split(',')) == 1:
+                m = imaplib.IMAP4_SSL(rc.SERVER)
+            else:
+                m = imaplib.IMAP4_SSL(rc.SERVER.split(',')[i])
+
+            if rc.PLAIN == 'True':
+                password = rc.PASS.split(',')[i]
+            else:
+                if len(rc.SERVICE.split(',')) == 1:
+                    password = keyring.get_password(rc.SERVICE, item)
+                else:
+                    password = keyring.get_password(rc.SERVICE.split(',')[i], item)
+
+            try:
+                m.login(item, password)
+            except imaplib.IMAP4.error:
+                print("Error: Login Failed\nPlease check your username and password")
+
+            rv, data = m.select("INBOX", readonly=True)
+            if rv == 'OK':
+                for line in webmail.process_mailbox(m):
+                    m_info.append(line)
+                    m.close()
+                m.logout()
+
+            i += 1
+
+        elif sec == 'pop':
+            pass # need to add POP support service
+        else:
+            pass
+
+    except Exception:
+        pass
 
 css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
-new_mail = {}
 tot = len(m_info)
 
 if tot < 5:
-    nl = 5 - tot
-    for l in range(nl):
+    for l in range(5 - tot):
         m_info.append('')
 else:
     pass
@@ -68,4 +91,11 @@ else:
 new_mail = methods.create_dict(m_info[-5:])
 new_mail['{x}'] = css
 new_mail['{tot}'] = str(tot)
-new_mail['{user}'] = rc.USER
+
+if len(rc.USER.split(',')) == 1:
+    new_mail['{user}'] = rc.USER
+else:
+    i = 0
+    for item in rc.USER.split(','):
+        new_mail['{user%d}' %i] = item
+        i += 1
