@@ -65,7 +65,7 @@ ram = system_info.ram()
 update = system_info.update(pm)
 
 # fs info
-for item in rc.MNT:
+for item in rc.MNT.split(','):
 
     l = system_info.fs(item)
     o = methods.create_dict(l)
