@@ -49,7 +49,7 @@ for item in rc.USER.split(','):
             else:
                 m = imaplib.IMAP4_SSL(rc.SERVER.split(',')[i])
 
-            if rc.PLAIN == 'True':
+            if rc.PLAIN:
                 password = rc.PASS.split(',')[i]
             else:
                 if len(rc.SERVICE.split(',')) == 1:
