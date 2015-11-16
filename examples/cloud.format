@@ -1,0 +1,12 @@
+# This is the format file for fs info thread in twolame
+# The allowed entry are
+# {x}                       - css path - DON'T EDIT IT HERE BUT INTO THE TWOLAMERC FILE
+# {0}, {1}, {2}, {3}        - last 5 new email received, in crescent order {0} --> {4}
+#
+# DO NOT USE <tr><td> tag for numeric entry ({0}, {1} etc) if you haven't edited the single mail format file accordingly
+
+<html><head><link href="{x}" rel="stylesheet" type="text/css"></head>
+<table width="392">
+<tr><td width="25%">Cloud storage fs</td><td width="20%"></td><td width="20%"></td><td width="30%"></td></tr>
+<br>{0}<br>{1}<br>{2}<br>{3}
+</table></html>

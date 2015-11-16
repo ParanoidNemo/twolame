@@ -1,0 +1,19 @@
+# This is the format file for fs info thread in twolame
+# The allowed entry are
+# {0}                       - Status of the player
+# {1}                       - Volume of the player NOT THE SYSTEM VOLUME
+# {2}                       - Random mode   (0-off, 1-on)
+# {3}                       - Repeat mode   (0-off, 1-on)
+# {4}                       - Consume mode  (0-off, 1-on)
+# {5}                       - Current Track Artist
+# {6}                       - Current Track Title
+# {7}                       - Current Track Album
+# {8}                       - Current Track Number
+# {cover}                       - link to cover image
+# {x}                       - link to the css file
+
+<html><head><link href="{x}" rel="stylesheet" type="text/css"></head>
+<table width="400">
+<tr><td align="center" valign="middle" rowspan="4" width="30%"><a href="exec:cantata"><img src="{cover}" width=100 height=100/></a></td><td width="40%" align="left" id="title">{7}</td><td width="29%"></td></tr>
+<tr><td align="left" id="artist">{5}</td><td></td></tr>
+</table></html>

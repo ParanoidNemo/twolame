@@ -1,0 +1,11 @@
+# This is the format file for fs info thread in twolame
+# The allowed entry are
+# {0}                       - total space
+# {1}                       - free space
+# {2}                       - used space
+# {3}                       - cloud service
+# {4}                       - free space perc
+# {5}                       - used space perc
+
+<tr><td>{3}</td><td></td></tr>
+<tr><td>free space:</td><td align="right">{1}/{0} Gb</td><td align="right">{4}%</td><td></td></tr>

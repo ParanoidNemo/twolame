@@ -1,18 +1,14 @@
 # This is the format file for fs info thread in twolame
 # The allowed entry are
-# {x} - css path - DON'T EDIT IT HERE BUT INTO THE TWOLAMERC FILE
-# {0} - name of the mounted file system
-# {1} - amount of free space (Gb)
+# {0} - partition name for the mounted file system (e.g. /dev/sda2)
+# {1} - filesystem type (e.g. ext4)
 # {2} - total space (Gb)
 # {3} - amount of used space (Gb)
-# {4} - percentage of free space (Gb)
-# {5} - percentage of used space (Gb)
-# kde-open {0}
+# {4} - amount of free space (Gb)
+# {5} - percentage of used space
+# {6} - mount point for the partition (e.g. /home)
+# {7} - percentage of used space
+# {8} - name of the mount point (e.g. Home)
 
-<html><head><link href="{x}" rel="stylesheet" type="text/css"></head>
-<table width="392">
-<tr><td width="25%">{0}</td><td width="25%"></td><td width="20%"></td><td id="push" rowspan="2" align="center" valign="middle" width="30%">open</td></tr><tr><td>free space:</td><td align="right">{1}/{2} Gb</td><td align="right">{4}%</td></tr>
-<tr></tr>
-<tr><td>{6}</td><td></td><td></td><td id="push" rowspan="2" align="center" valign="middle">open</td></tr><tr><td>free space:</td><td align="right">{7}/{8} Gb</td><td align="right">{10}%</td></tr>
-<tr><td colspan="5"><hr width="98%" /></td></tr>
-</table></html>
+<tr><td align="left" id="title">{8}:</td><td align="right" colspan="2">{3} / {2}</td><td align="right">({5})</td><td align="right" colspan="2">{0}</td></tr>
+<tr><td colspan="6"><hr align="center" size="1" width="392"></td></tr>

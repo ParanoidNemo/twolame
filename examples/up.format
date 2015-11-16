@@ -1,0 +1,24 @@
+# This is the format file for fs info thread in twolame
+# The allowed entry are
+# {x}                       - css path - DON'T EDIT IT HERE BUT INTO THE TWOLAMERC FILE
+# {tot}                     - total number of updates (IF ON ARCH repo + aur)
+# {repo}                    - IF ON ARCH total official repo update
+# {aur}                     - IF ON ARCH total aur update
+# {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}   - last 10 update, in crescent order {0} --> {9}
+
+<html><head><link href="{x}" rel="stylesheet" type="text/css"></head>
+<table width="392">
+<tr><td width="40%">Repo</td><td width="60%">{repo} update(s)</td></tr>
+<tr><td>AUR</td><td>{aur} update(s)</td></tr>
+<br>
+<tr><td>{0}</td></tr>
+<tr><td>{1}</td></tr>
+<tr><td>{2}</td></tr>
+<tr><td>{3}</td></tr>
+<tr><td>{4}</td></tr>
+<tr><td>{5}</td></tr>
+<tr><td>{6}</td></tr>
+<tr><td>{7}</td></tr>
+<tr><td>{8}</td></tr>
+<tr><td>{9}</td></tr>
+</table></html>

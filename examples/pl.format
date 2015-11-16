@@ -1,0 +1,13 @@
+# This is the format file for fs info thread in twolame
+# The allowed entry are
+# {playlist}                - link to cover image
+# {x}                       - link to the css file
+# {shuffle}                 - shuffle mode on/off
+
+<html><head><link href="{x}" rel="stylesheet" type="text/css"></head>
+<table width="392" align="center" valign="middle">
+<tr><td colspan="5"><hr align="center" size="1" width="392" color="white" noshade></td></tr>
+<tr><td>Shuffle</td><td></td><td></td><td align="center"><a href="exec:mpc random"><img src={shuffle} width=18/></a></td><td></td></tr>
+<tr><td colspan="5"><hr align="center" size="1" width="392" color="white" noshade></td></tr>
+{playlist}
+</table></html>

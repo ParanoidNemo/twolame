@@ -1,0 +1,22 @@
+# This is the format file for fs info thread in twolame
+# The allowed entry are
+# {0}                       - Status of the player
+# {1}                       - Volume of the player NOT THE SYSTEM VOLUME
+# {2}                       - Random mode   (0-off, 1-on)
+# {3}                       - Repeat mode   (0-off, 1-on)
+# {4}                       - Consume mode  (0-off, 1-on)
+# {5}                       - Current Track Artist
+# {6}                       - Current Track Title
+# {7}                       - Current Track Album
+# {8}                       - Current Track Number
+# {x}                       - link to the css file
+# {button}                  - button img for play/pause
+# {dot}                     - dot img to control music panel or do whatever you want ;)
+# {playlist}                - print the current playlist - TO CHANGE THE FORMAT OF THE PLAYLIST YOU
+#                             NEED TO EDIT THE playlist.format file
+
+<html><head><link href="{x}" rel="stylesheet" type="text/css"></head>
+<table width="392">
+<tr><td rowspan="2" align="center" valign="middle" width="15%"><a href="exec:mpc toggle"><img src={button} width=32/></a></td><td align="center" valign="middle" width="70%" id="c_title">{6}</td><td rowspan="2" align="center" valign="middle" width="15%"><a href="exec:qdbus org.kde.be.shell /Shell org.kde.be.shell.hidePanel FileSystem; qdbus org.kde.be.shell /Shell org.kde.be.shell.hidePanel Notify; qdbus org.kde.be.shell /Shell org.kde.be.shell.hidePanel Air; sleep 0.3; qdbus org.kde.be.shell /Shell org.kde.be.shell.showPanel Cover; qdbus org.kde.be.shell /Shell org.kde.be.shell.showPanel Playlist"><img src={dot} width=32/></a></td></tr>
+<tr><td align="center" valign="middle" id="c_info">{5} -- {7}</td></tr>
+</table></html>

@@ -1,0 +1,39 @@
+# This is the format file for fs info thread in twolame
+# The allowed entry are
+# {x} - css path - DON'T EDIT IT HERE BUT INTO THE TWOLAMERC FILE
+# {0}{4} - file system mounted and monitored (you can format it modifing fs.format file)
+# {e} - file manager software
+# {distro} - distro name
+# {de} - desktop environment name
+# {wm} - windows manager name
+# {ut_days} - uptime days
+# {ut_hours} - uptime hours
+# {ut_minutes} - uptime minutes
+# {ut_seconds} - uptime seconds
+# {hostname} - hostname
+# {kernel_build} - kernel version
+# {architecture} - machine architecture
+# {cpu} - cpu type
+# {ram_tot} - total ram
+# {ram_used} - amount of ram used
+# {ram_free} - amount of ram free
+# {ram_used_perc} - percentage of ram used
+# {ram_free_perc} - percentage of ram free
+# {updates} - number of update
+# {aur} - number of aur package to update (if you are on archlinux)
+
+<html><head><link href="{x}" rel="stylesheet" type="text/css"></head>
+<table width="392">
+<tr><td align="left" width="10%" id="title">OS:</td><td align="right" width="20%">{distro}</td><td align="right" width="10%">{architecture}</td><td width="20%" align="right">{kernel_build}</td><td width="20%"></td><td width="20%"></td></tr>
+<tr><td colspan="6"><hr align="center" size="1" width="392"></td></tr>
+<tr><td align="left" id="title">DE:</td><td align="right">{de}</td><td align="right" id="title">WM:</td><td align="right">{wm}</td><td align="right" id="title">HOST:</td><td align="right">{hostname}</td></tr>
+<tr><td colspan="6"><hr align="center" size="1" width="392"></td></tr>
+<tr><td align="left" id="title">Uptime:</td><td colspan="3" align="right">{ut_days} days, {ut_hours} hours, {ut_minutes} minutes</td><td></td><td></td></tr>
+<tr><td colspan="6"><hr align="center" size="1" width="392"></td></tr>
+<tr><td id="title">Repo:</td><td align="right" colspan="2">{updates}</td><td align="right" id="title">AUR:</td><td align="right" colspan="2">{aur}</td></tr>
+<tr><td colspan="6"><hr align="center" size="1" width="392"></td></tr>
+<tr><td id="title">Ram:</td><td align="right" colspan="2">{ram_used}M / {ram_tot}M</td><td align="right">({ram_used_perc}%)</td><td></td><td></td></tr>
+<tr><td colspan="6"><hr align="center" size="1" width="392"></td></tr>
+{0}
+{1}
+</table></html>

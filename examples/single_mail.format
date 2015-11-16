@@ -1,0 +1,11 @@
+# This is the format file for fs info thread in twolame
+# The allowed entry are
+# {0}                       - From
+# {1}                       - Message Number
+# {2}                       - Subject
+# {3}                       - Raw Date
+
+<tr><td>From:</td><td>{0}</td></tr>
+<tr><td>Message {1}:</td><td>{2}</td></tr>
+<tr><td>Raw Date:</td><td>{3}</td></tr>
+<tr><td colspan="2"><hr align="center" size="1" width="392"></td></tr>

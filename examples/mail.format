@@ -1,0 +1,21 @@
+# This is the format file for fs info thread in twolame
+# The allowed entry are
+# {x}                       - css path - DON'T EDIT IT HERE BUT INTO THE TWOLAMERC FILE
+# {tot}                     - total number of new email
+# {user}                    - the username account choose to display - THIS ENTRY NOT DEFINE WHICH ACCOUNT YOU
+#                             ARE USING, ONLY DISPLAY THE ONE USED INTO THE RC FILE
+# {0}, {1}, {2}, {3}, {4}   - last 5 new email received, in crescent order {0} --> {4}
+#
+# DO NOT USE <tr><td> tag for numeric entry ({0}, {1} etc) if you haven't edited the single mail format file accordingly
+
+<html><head><link href="{x}" rel="stylesheet" type="text/css"></head>
+<table width="392">
+<tr><td width="40%">INBOX: </td><td width="60%">{user}</td></tr>
+<tr><td>Received:</td><td>{tot} new e-mail(s)</td></tr>
+<tr><td colspan="2"><hr align="center" size="1" width="392"></td></tr>
+{0}
+{1}
+{2}
+{3}
+{4}
+</table></html>

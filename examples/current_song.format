@@ -1,0 +1,9 @@
+# This is the format file for current song in playlist info thread in twolame
+# The allowed entry are
+# {0}                       - Track Number
+# {1}                       - Title
+# {2}                       - Artist
+# {3}                       - Length time for the song
+
+<tr><td width="5%"><i>{0}</i></td><td width="50%"><i>{1}</i></td><td width="34%"></td><td align="right" width="10%"><i>{3}</i></td><td width="1%"></td></tr>
+<tr><td colspan="5"><hr align="center" size="1" width="392"></td></tr>
