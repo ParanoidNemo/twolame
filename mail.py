@@ -33,6 +33,7 @@ rc.get_rc(rc_file)
 i = 0
 
 m_info = []
+m_count = []
 
 for item in rc.USER.split(','):
 
@@ -64,6 +65,9 @@ for item in rc.USER.split(','):
 
             rv, data = m.select("INBOX", readonly=True)
             if rv == 'OK':
+
+                m_count.append(webmail.new_message_count(m))
+
                 for line in webmail.process_mailbox(m):
                     m_info.append(line)
                     m.close()
@@ -99,3 +103,8 @@ else:
     for item in rc.USER.split(','):
         new_mail['{user%d}' %i] = item
         i += 1
+
+i = 0
+for item in m_count:
+    new_mail['{new_message%d}' %i] = item
+    i += 1
