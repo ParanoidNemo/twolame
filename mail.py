@@ -83,7 +83,7 @@ for item in rc.USER.split(','):
     except Exception:
         pass
 
-css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
+css = os.path.join(beshell.Theme.path(), 'style.css.d', 'tl_mail.css')
 tot = len(m_info)
 
 if tot < 5:
