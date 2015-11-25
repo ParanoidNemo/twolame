@@ -74,6 +74,47 @@ class SYSTEM(threading.Thread):
             f.write(self.outstring)
             f.write('\n')
 
+class AUDIO(threading.Thread):
+
+    def __init__(self, threadID):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.outstring = ''
+        self.format_string = ''
+        self.v = __import__("audio")
+
+        try:
+            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_audio'))
+        except:
+            pass
+
+        with open(os.path.join(beshell.Theme.path(), 'twolame', 'audio.format')) as f:
+            for line in f:
+                if line.startswith('#'):
+                    continue
+                self.format_string += line
+
+        self.format_string = re.sub(r'>\s<', '><', self.format_string)
+
+    def run(self):
+        while True:
+
+            importlib.reload(self.v)
+
+            self.out()
+            time.sleep(int(rc.AUDIO_UPDATE_PERIOD))
+
+    def out(self):
+        self.info = self.v.vol_info
+        self.outstring = methods.insert_data(self.format_string, self.info)
+
+        self.outstring = re.sub(r'<tr></tr>', '', self.outstring)
+        self.outstring = re.sub(r'\n', '', self.outstring)
+
+        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_audio'), 'w') as f:
+            f.write(self.outstring)
+            f.write('\n')
+
 class CLOUD(threading.Thread):
 
     def __init__(self, threadID):
@@ -264,6 +305,10 @@ def main():
     if rc.CLOUD == '1':
         fit5 = CLOUD(5)
         fit5.start()
+
+    if rc.AUDIO == '1':
+        fit6 = AUDIO(6)
+        fit6.start()
 
 if __name__ == '__main__':
     main()
