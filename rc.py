@@ -35,6 +35,7 @@ def get_rc(rc_file):
     global CLOUD, CLOUD_UPDATE_PERIOD, LOCAL, LOCAL1, LOCAL2
     global RCLONE, RCLONE_SECTIONS, RCLONE_CONFIG_FILE
     global MEGA, SIZE
+    global AUDIO, AUDIO_UPDATE_PERIOD
 
     # create the parser
     conf_parser = configparser.ConfigParser()
@@ -87,3 +88,7 @@ def get_rc(rc_file):
     # gather mega info
     MEGA = conf_parser.get('cloud', 'use_mega')
     SIZE = conf_parser.get('cloud', 'size')
+
+    # gather audio info
+    AUDIO = conf_parser.get("twolame", "start_audio")
+    AUDIO_UPDATE_PERIOD = conf_parser.get("audio", "update_period")
