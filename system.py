@@ -24,11 +24,12 @@ from spam import system_info
 from spam import beshell
 from spam import methods
 
-rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
+theme = beshell.Theme()
+rc_file = os.path.join(theme.path, 'twolamerc')
 
 rc.get_rc(rc_file)
 
-css = os.path.join(beshell.Theme.path(), 'style.css.d', 'tl_system.css')
+css = os.path.join(theme.path, 'style.css.d', 'tl_system.css')
 fm = rc.FM
 pm = rc.PM
 
@@ -36,7 +37,7 @@ si = []
 
 #-------------------------- format file definition------------------------------
 
-fs_format_file = os.path.join(beshell.Theme.path(), 'twolame', 'fs.format')
+fs_format_file = os.path.join(theme.path, 'twolame', 'fs.format')
 
 #------------------------------collecting info----------------------------------
 

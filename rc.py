@@ -36,6 +36,7 @@ def get_rc(rc_file):
     global RCLONE, RCLONE_SECTIONS, RCLONE_CONFIG_FILE
     global MEGA, SIZE
     global AUDIO, AUDIO_UPDATE_PERIOD
+    global NET, NET_UPDATE_PERIOD
 
     # create the parser
     conf_parser = configparser.ConfigParser()
@@ -92,3 +93,7 @@ def get_rc(rc_file):
     # gather audio info
     AUDIO = conf_parser.get("twolame", "start_audio")
     AUDIO_UPDATE_PERIOD = conf_parser.get("audio", "update_period")
+
+    # gather net info
+    NET = conf_parser.get("twolame", "start_net")
+    NET_UPDATE_PERIOD = conf_parser.get("net", "update_period")

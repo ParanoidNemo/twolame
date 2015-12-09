@@ -33,6 +33,8 @@ import rc
 from spam import beshell
 from spam import methods
 
+theme = beshell.Theme()
+
 class SYSTEM(threading.Thread):
 
     def __init__(self, threadID):
@@ -47,7 +49,7 @@ class SYSTEM(threading.Thread):
         except:
             pass
 
-        with open(os.path.join(beshell.Theme.path(), 'twolame', 'system.format')) as f:
+        with open(os.path.join(theme.path, 'twolame', 'system.format')) as f:
             for line in f:
                 if line.startswith('#'):
                     continue
@@ -88,7 +90,7 @@ class AUDIO(threading.Thread):
         except:
             pass
 
-        with open(os.path.join(beshell.Theme.path(), 'twolame', 'audio.format')) as f:
+        with open(os.path.join(theme.path, 'twolame', 'audio.format')) as f:
             for line in f:
                 if line.startswith('#'):
                     continue
@@ -112,6 +114,47 @@ class AUDIO(threading.Thread):
         self.outstring = re.sub(r'\n', '', self.outstring)
 
         with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_audio'), 'w') as f:
+            f.write(self.outstring)
+            f.write('\n')
+
+class NET(threading.Thread):
+
+    def __init__(self, threadID):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.outstring = ''
+        self.format_string = ''
+        self.n = __import__("web")
+
+        try:
+            os.mkfifo(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_net'))
+        except:
+            pass
+
+        with open(os.path.join(theme.path, "twolame", "net.format")) as f:
+            for line in f:
+                if line.startswith('#'):
+                    continue
+                self.format_string += line
+
+        self.format_string = re.sub(r'>\s<', '><', self.format_string)
+
+    def run(self):
+        while True:
+
+            importlib.reload(self.n)
+
+            self.out()
+            time.sleep(int(rc.NET_UPDATE_PERIOD))
+
+    def out(self):
+        self.info = self.n.net
+        self.outstring = methods.insert_data(self.format_string, self.info)
+
+        self.outstring = re.sub(r'<tr></tr>', '', self.outstring)
+        self.outstring = re.sub(r'\n', '', self.outstring)
+
+        with open(os.path.expanduser('~/.local/share/be.shell/fifo/twolame_net'), 'w') as f:
             f.write(self.outstring)
             f.write('\n')
 
@@ -172,7 +215,7 @@ class MAIL(threading.Thread):
         except:
             pass
 
-        with open(os.path.join(beshell.Theme.path(), 'twolame', 'mail.format')) as f:
+        with open(os.path.join(theme.path, 'twolame', 'mail.format')) as f:
             for line in f:
                 if line.startswith('#'):
                     continue
@@ -226,7 +269,7 @@ class MPD(threading.Thread):
         except:
             pass
 
-        with open(os.path.join(beshell.Theme.path(), 'twolame', 'music.format')) as f:
+        with open(os.path.join(theme.path, 'twolame', 'music.format')) as f:
             for line in f:
                 if line.startswith('#'):
                     continue
@@ -234,7 +277,7 @@ class MPD(threading.Thread):
 
         self.format_string = re.sub(r'>\s<', '><', self.format_string)
 
-        with open(os.path.join(beshell.Theme.path(), 'twolame', 'cover.format')) as v:
+        with open(os.path.join(theme.path, 'twolame', 'cover.format')) as v:
             for line in v:
                 if line.startswith('#'):
                     continue
@@ -242,7 +285,7 @@ class MPD(threading.Thread):
 
         self.format_string2 = re.sub(r'>\s<', '><', self.format_string2)
 
-        with open(os.path.join(beshell.Theme.path(), 'twolame', 'pl.format')) as p:
+        with open(os.path.join(theme.path, 'twolame', 'pl.format')) as p:
             for line in p:
                 if line.startswith('#'):
                     continue
@@ -286,7 +329,7 @@ def main():
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         datefmt="%H:%M:%S")
 
-    rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
+    rc_file = os.path.join(theme.path, 'twolamerc')
 
     rc.get_rc(rc_file)
 
@@ -309,6 +352,10 @@ def main():
     if rc.AUDIO == '1':
         fit6 = AUDIO(6)
         fit6.start()
+
+    if rc.NET == '1':
+        fit7 = NET(7)
+        fit7.start()
 
 if __name__ == '__main__':
     main()

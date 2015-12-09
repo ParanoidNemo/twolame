@@ -29,22 +29,23 @@ from spam import beshell
 from spam import music
 from spam import methods
 
+theme = beshell.Theme()
 #gathering information(s)
-rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
+rc_file = os.path.join(theme.path, 'twolamerc')
 
 rc.get_rc(rc_file)
 
-css = os.path.join(beshell.Theme.path(), 'style.css.d', rc.CSS)
+css = os.path.join(theme.path, 'style.css.d', rc.CSS)
 
 c = musicpd.MPDClient()
 
 info_pl = {}
 
-play = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'play.png')
-pause = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'pause.png')
-stop = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'stop.png')
+play = os.path.join(theme.path, 'twolame', 'icons', 'play.png')
+pause = os.path.join(theme.path, 'twolame', 'icons', 'pause.png')
+stop = os.path.join(theme.path, 'twolame', 'icons', 'stop.png')
 
-panel = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'down.png')
+panel = os.path.join(theme.path, 'twolame', 'icons', 'down.png')
 
 info = methods.create_dict(music.process_mpd(c))
 info['{x}'] = css
@@ -64,9 +65,9 @@ for item in music.playlist(c):
     pl += item
 
 if c.status()['random'] == '1':
-    shuffle = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'shuffle_check.png')
+    shuffle = os.path.join(theme.path, 'twolame', 'icons', 'shuffle_check.png')
 else:
-    shuffle = os.path.join(beshell.Theme.path(), 'twolame', 'icons', 'shuffle.png')
+    shuffle = os.path.join(theme.path, 'twolame', 'icons', 'shuffle.png')
 
 info_pl = {"{playlist}": pl, "{x}": css, "{shuffle}": shuffle}
 

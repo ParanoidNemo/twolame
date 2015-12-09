@@ -27,7 +27,8 @@ from spam import webmail
 from spam import beshell
 from spam import methods
 
-rc_file = os.path.join(beshell.Theme.path(), 'twolamerc')
+theme = beshell.Theme()
+rc_file = os.path.join(theme.path, 'twolamerc')
 
 rc.get_rc(rc_file)
 i = 0
@@ -83,7 +84,7 @@ for item in rc.USER.split(','):
     except Exception:
         pass
 
-css = os.path.join(beshell.Theme.path(), 'style.css.d', 'tl_mail.css')
+css = os.path.join(theme.path, 'style.css.d', 'tl_mail.css')
 tot = len(m_info)
 
 if tot < 5:

@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 
 #   Copyright (C) 2015 by Andrea Calzavacca <paranoid.nemo@gmail.com>
 #
@@ -18,17 +18,25 @@
 #   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 import os, sys
-import alsaaudio
 
 from spam import beshell
-from spam import methods
-from spam import volume
+from spam import network
 
 theme = beshell.Theme()
+# define interface
+interface = "wlp16s0"
 
-css = os.path.join(theme.path, 'style.css.d', 'tl_audio.css')
+net = {"interface": interface}
 
-m = alsaaudio.Mixer()
+if network.wifi_info(interface)[1] == "off/any":
+    net["{connection}"] = "off"
+    net["{quality}"] = "n/a"
+    net["{essid}"] = "n/a"
+else:
+    net["{connection}"] = "on"
+    net["{quality}"] = network.wifi_info(interface)[2]
+    net["{essid}"] = network.wifi_info(interface)[1]
 
-vol_info = methods.create_dict(volume.alsa_info(m))
-vol_info["{x}"] = css
+css = os.path.join(theme.path, "style.css.d", "tl_net")
+
+net["{x}"] = css
