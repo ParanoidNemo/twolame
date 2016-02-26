@@ -32,7 +32,7 @@ def get_rc(rc_file):
     global UP, UP_UPDATE_PERIOD, PM
     global SERVICE
     global MUSIC, MPD_UPDATE_PERIOD, PORT, COVER_PATH
-    global CLOUD, CLOUD_UPDATE_PERIOD, LOCAL, LOCAL1, LOCAL2
+    global CLOUD, CLOUD_UPDATE_PERIOD
     global RCLONE, RCLONE_SECTIONS, RCLONE_CONFIG_FILE
     global MEGA, SIZE
     global AUDIO, AUDIO_UPDATE_PERIOD
@@ -77,9 +77,6 @@ def get_rc(rc_file):
     # gather cloud info
     CLOUD = conf_parser.get('twolame', 'start_cloud')
     CLOUD_UPDATE_PERIOD = conf_parser.get('cloud', 'update_period')
-    LOCAL = conf_parser.get('cloud', 'local')
-    LOCAL1 = conf_parser.get('cloud', 'local1')
-    LOCAL2 = conf_parser.get('cloud', 'local2')
 
     # gather rclone info
     RCLONE = conf_parser.get('cloud', 'use_rclone')
