@@ -31,7 +31,7 @@ def get_rc(rc_file):
     global MAIL, MAIL_UPDATE_PERIOD, SECURITY, SERVER, USER, PASS, PLAIN
     global UP, UP_UPDATE_PERIOD, PM
     global SERVICE
-    global MUSIC, MPD_UPDATE_PERIOD, PORT, COVER_PATH
+    global MUSIC, MPD_UPDATE_PERIOD, PORT, COVER_PATH, COVER_SIZE
     global CLOUD, CLOUD_UPDATE_PERIOD
     global RCLONE, RCLONE_SECTIONS, RCLONE_CONFIG_FILE
     global MEGA, SIZE
@@ -73,6 +73,7 @@ def get_rc(rc_file):
     MPD_UPDATE_PERIOD = conf_parser.get('music', 'update_period')
     PORT = conf_parser.get('music', 'port')
     COVER_PATH = conf_parser.get('music', 'cover_path')
+    COVER_SIZE = conf_parser.get("music", "cover_size")
 
     # gather cloud info
     CLOUD = conf_parser.get('twolame', 'start_cloud')

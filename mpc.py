@@ -25,6 +25,7 @@ import musicpd
 
 #import custom module(s)
 import rc
+from PIL import Image
 from spam import beshell
 from spam import music
 from spam import methods
@@ -72,5 +73,30 @@ else:
 info_pl = {"{playlist}": pl, "{x}": css, "{shuffle}": shuffle}
 
 info_cv = methods.create_dict(music.process_mpd(c))
-info_cv["{cover}"] = music.cover(rc.COVER_PATH, c)
+
+#-----Manipulating cover file
+
+container = []
+orig_path = music.cover(rc.COVER_PATH, c)
+new_path = "/"
+
+for item in orig_path.split("/"):
+    if item.endswith(".jpg") or item.endswith(".png"):
+        item = "r" + item
+        container.append(item)
+    else:
+        container.append(item)
+
+for item in container[1:]:
+    if item.endswith(".jpg") or item.endswith(".png"):
+        new_path += item
+    else:
+        new_path += item + "/"
+
+cover = Image.open(music.cover(rc.COVER_PATH, c))
+ssize = int(rc.COVER_SIZE)
+newcov = cover.resize((ssize, ssize))
+newcov.save(new_path)
+
+info_cv["{cover}"] = new_path
 info_cv["{x}"] = css
