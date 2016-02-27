@@ -76,22 +76,22 @@ info_cv = methods.create_dict(music.process_mpd(c))
 
 #-----Manipulating cover file
 
-container = []
+#container = []
 orig_path = music.cover(rc.COVER_PATH, c)
-new_path = "/"
+new_path = os.path.join(theme.path, "twolame", "cover.jpg")
 
-for item in orig_path.split("/"):
-    if item.endswith(".jpg") or item.endswith(".png"):
-        item = "r" + item
-        container.append(item)
-    else:
-        container.append(item)
+#for item in orig_path.split("/"):
+#    if item.endswith(".jpg") or item.endswith(".png"):
+#        item = "r" + item
+#        container.append(item)
+#    else:
+#        container.append(item)
 
-for item in container[1:]:
-    if item.endswith(".jpg") or item.endswith(".png"):
-        new_path += item
-    else:
-        new_path += item + "/"
+#for item in container[1:]:
+#    if item.endswith(".jpg") or item.endswith(".png"):
+#        new_path += item
+#    else:
+#        new_path += item + "/"
 
 cover = Image.open(music.cover(rc.COVER_PATH, c))
 ssize = int(rc.COVER_SIZE)
