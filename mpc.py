@@ -85,4 +85,6 @@ newcov = cover.resize((ssize, ssize))
 newcov.save(new_path)
 
 info_cv["{cover}"] = new_path
+info_cv["{button}"] = toggle
+info_cv["{dot}"] = panel
 info_cv["{x}"] = css
