@@ -24,7 +24,7 @@ from spam import network
 
 theme = beshell.Theme()
 # define interface
-interface = "wlp16s0"
+interface = "wlp3s0"
 
 net = {"interface": interface}
 
@@ -38,5 +38,7 @@ else:
     net["{essid}"] = network.wifi_info(interface)[1]
 
 css = os.path.join(theme.path, "style.css.d", "tl_net")
+icon = os.path.join(theme.path, "TopPanel", "net.png")
 
+net["{icon}"] = icon
 net["{x}"] = css

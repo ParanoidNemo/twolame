@@ -27,8 +27,10 @@ from spam import volume
 theme = beshell.Theme()
 
 css = os.path.join(theme.path, 'style.css.d', 'tl_audio.css')
+icon = os.path.join(theme.path, "TopPanel", "audio.png")
 
 m = alsaaudio.Mixer()
 
 vol_info = methods.create_dict(volume.alsa_info(m))
+vol_info["{icon}"] = icon
 vol_info["{x}"] = css
